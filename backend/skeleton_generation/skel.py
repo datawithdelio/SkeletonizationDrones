@@ -11,11 +11,8 @@ from skeleton_generation.utils.processing_utils.create_overlay import overlay_im
 from skeleton_generation.utils.processing_utils.process_images import process_image
 
 
-# Get the directory where this script is located
-current_directory = os.getcwd()
-
-# Define the relative path to the model file
-model_path = os.path.join(current_directory,"skeleton_generation", "utils", "models", "yolov8n-seg.onnx")
+current_directory = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_directory, "utils", "models", "yolov8n-seg.onnx")
 
 def filter_most_confident(detections):
     max_confidence = 0
@@ -186,7 +183,10 @@ def skeletonize_video(input_path, output_path, file_name, skeleton_data_name, ge
         workers.append(worker_process)
         worker_process.start()
 
-    writer_process = Process(target=video_writer, args=(f"{output_path}\\{file_name}", result_queue, frame_count, width, height, fps))
+    writer_process = Process(
+        target=video_writer,
+        args=(os.path.join(output_path, file_name), result_queue, frame_count, width, height, fps),
+    )
     writer_process.start()
 
     # Wait for all processes to finish
@@ -198,7 +198,7 @@ def skeletonize_video(input_path, output_path, file_name, skeleton_data_name, ge
 
     points_data = list(points_data)
 
-    torch.save(points_data, f"{output_path}\\{skeleton_data_name}")
+    torch.save(points_data, os.path.join(output_path, skeleton_data_name))
 
     print(f"Finished in {time.monotonic() - start_time} seconds")
     cv.destroyAllWindows()
@@ -240,11 +240,11 @@ def skeletonize_img(input_path, output_path, file_name, skeleton_data_name, gene
                 if ci != (len(results[0].boxes) - 1):
                     background = overlayed
                 else:
-                    cv.imwrite((f"{output_path}\\{file_name}"), overlayed)
+                    cv.imwrite(os.path.join(output_path, file_name), overlayed)
         else:
-            cv.imwrite((f"{output_path}\\{file_name}"), overlayed)
+            cv.imwrite(os.path.join(output_path, file_name), overlayed)
  
-        torch.save(points_data, f"{output_path}\\{skeleton_data_name}")
+        torch.save(points_data, os.path.join(output_path, skeleton_data_name))
 
 
 def skeletonize_img_single_detection(input_path, output_path, file_name, generation_settings):

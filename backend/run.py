@@ -3,5 +3,5 @@ import os
 from app import app  # Ensure this imports your WSGI application correctly
 
 if __name__ == "__main__":
-    port = int(os.getenv('PORT', 8000))  # Default to 8000 if PORT is not set
+    port = int(os.getenv('PORT', 5001))
     serve(app, host='0.0.0.0', port=port)

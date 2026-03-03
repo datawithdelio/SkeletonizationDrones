@@ -3,6 +3,8 @@ import loadingSpinner from '../assets/loading_spinner.svg';
 import sendButton from '../assets/send.svg';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
 const Generate = () => {
     const [downloadReady, setDownloadReady] = useState(false);
     const [viewURL, setViewURL] = useState(null);
@@ -15,6 +17,7 @@ const Generate = () => {
     const [prompt, setPrompt] = useState(null);
     const [caption, setCaption] = useState(null);
     const [dataURL, setDataURL] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
     const [generationSettings, setGenerationSettings] = useState({
         confidence_level: 0.5,
         smoothing_factor: 7,
@@ -23,8 +26,6 @@ const Generate = () => {
 
     const inputFileRef = useRef(null);
     const videoRef = useRef(null);
-
-    const BASE_URL = 'http://127.0.0.1:5000';
 
     const handleSettingsChange = (event) => {
         const { name, value } = event.target;
@@ -64,21 +65,24 @@ const Generate = () => {
         setIsVideo(false);
         setGenerateDisabled(true);
         setGenerating(true);
+        setErrorMessage(null);
 
         try {
-            const res = await axios.post(`${BASE_URL}/api/openai/upload`, {
+            const res = await axios.post(`${API_BASE_URL}/api/openai/upload`, {
                 prompt,
                 generationSettings
             });
 
             const id = res.data.id;
-            setFileURL(`${BASE_URL}/api/download/${id}`);
-            setDataURL(`${BASE_URL}/api/download_data/${id}`);
-            setViewURL(`${BASE_URL}/api/view/${id}`);
+            setFileURL(`${API_BASE_URL}/api/download/${id}`);
+            setDataURL(`${API_BASE_URL}/api/download_data/${id}`);
+            setViewURL(`${API_BASE_URL}/api/view/${id}`);
             setCaption(res.data.caption);
             setDownloadReady(true);
         } catch (err) {
             console.error('Error uploading prompt:', err);
+            setDownloadReady(false);
+            setErrorMessage(err.response?.data?.msg || 'AI generation failed.');
         } finally {
             setGenerating(false);
         }
@@ -89,6 +93,7 @@ const Generate = () => {
 
         setGenerateDisabled(true);
         setGenerating(true);
+        setErrorMessage(null);
 
         const formData = new FormData();
         formData.append('file', file);
@@ -96,18 +101,20 @@ const Generate = () => {
         formData.append('generationSettings', JSON.stringify(generationSettings));
 
         try {
-            const res = await axios.post(`${BASE_URL}/api/upload`, formData, {
+            const res = await axios.post(`${API_BASE_URL}/api/upload`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
             const id = res.data.id;
-            setFileURL(`${BASE_URL}/api/download/${id}`);
-            setDataURL(`${BASE_URL}/api/download_data/${id}`);
-            setViewURL(`${BASE_URL}/api/view/${id}`);
+            setFileURL(`${API_BASE_URL}/api/download/${id}`);
+            setDataURL(`${API_BASE_URL}/api/download_data/${id}`);
+            setViewURL(`${API_BASE_URL}/api/view/${id}`);
             setCaption(res.data.caption);
             setDownloadReady(true);
         } catch (err) {
             console.error('Error uploading file:', err);
+            setDownloadReady(false);
+            setErrorMessage(err.response?.data?.msg || 'File upload failed.');
         } finally {
             setGenerating(false);
         }
@@ -120,6 +127,13 @@ const Generate = () => {
                     <div className='flex flex-col items-center justify-center'>
                         <img className='w-10 h-10' src={loadingSpinner} alt="Loading..." />
                         <p>Generating Skeleton...</p>
+                    </div>
+                )}
+                {errorMessage && (
+                    <div className='flex justify-center px-4'>
+                        <p className='rounded-xl border border-red-500 bg-red-950/40 px-4 py-2 text-center text-sm text-red-200 md:text-base'>
+                            {errorMessage}
+                        </p>
                     </div>
                 )}
             </div>
