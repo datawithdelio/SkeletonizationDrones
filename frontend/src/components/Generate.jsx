@@ -47,14 +47,19 @@ const Generate = () => {
     };
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const type = file.type;
-            setIsImage(type.startsWith('image/'));
-            setIsVideo(type.startsWith('video/'));
-            setGenerateDisabled(false);
-            setFile(file);
+        const nextFile = event.target.files?.[0];
+        if (!nextFile) {
+            return;
         }
+
+        const type = nextFile.type;
+        setIsImage(type.startsWith('image/'));
+        setIsVideo(type.startsWith('video/'));
+        setGenerateDisabled(false);
+        setErrorMessage(null);
+        setDownloadReady(false);
+        setCaption(null);
+        setFile(nextFile);
     };
 
     const handleInput = () => inputFileRef.current.click();
@@ -89,7 +94,10 @@ const Generate = () => {
     };
 
     const handleGenerate = async () => {
-        if (!file) return;
+        if (!file) {
+            setErrorMessage('Select a file first.');
+            return;
+        }
 
         setGenerateDisabled(true);
         setGenerating(true);
@@ -114,7 +122,10 @@ const Generate = () => {
         } catch (err) {
             console.error('Error uploading file:', err);
             setDownloadReady(false);
-            setErrorMessage(err.response?.data?.msg || 'File upload failed.');
+            setErrorMessage(
+                err.response?.data?.msg ||
+                'Could not generate a skeleton for this file. Try another image or adjust settings.'
+            );
         } finally {
             setGenerating(false);
         }

@@ -29,6 +29,7 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 frontend_folder = os.path.join(os.path.dirname(base_dir), "frontend")
 dist_folder = os.path.join(frontend_folder, "dist")
 
+
 @app.route('/', defaults={"filename": ""})
 @app.route('/<path:filename>')
 def index(filename):
@@ -37,6 +38,7 @@ def index(filename):
             "msg": "Frontend build not found. Run `npm run build` in the frontend directory or start Vite separately."
         }), 503
     return send_from_directory(dist_folder, filename or "index.html")
+
 
 file_dict = {}
 
@@ -54,6 +56,7 @@ def get_file_response(unique_id, as_attachment=False):
         return jsonify({"msg": "File or ID Not Found!"}), 404
 
     return send_from_directory(app.config['RESULT_FOLDER'], file_name, as_attachment=as_attachment)
+
 
 @app.route('/api/upload', methods=["POST"])
 def upload():
@@ -75,15 +78,22 @@ def upload():
     if ext.lower() in image_extensions:
         skeleton_fil_name = f"{file_name}-skeleton.png"
         skeleton_data_name = f"{file_name}-data.pt"
-        skeletonize_img(input_path, app.config['RESULT_FOLDER'], skeleton_fil_name, skeleton_data_name, generation_settings)
+
+        generated = skeletonize_img(
+            input_path,
+            app.config['RESULT_FOLDER'],
+            skeleton_fil_name,
+            skeleton_data_name,
+            generation_settings,
+        )
 
         skeleton_path = os.path.join(app.config['RESULT_FOLDER'], skeleton_fil_name)
-        if os.path.exists(skeleton_path):
+        if generated and os.path.exists(skeleton_path):
             caption = describe_image(skeleton_path)
         else:
             os.remove(input_path)
             return jsonify({
-                "msg": "No recognizable object was detected in the uploaded image. Try a clearer drone image."
+                "msg": "Could not generate a skeleton from this image. Try a clearer image or adjust settings."
             }), 422
 
     elif ext.lower() in video_extensions:
@@ -99,6 +109,7 @@ def upload():
         caption = "Video processed — no caption generated."
 
     else:
+        os.remove(input_path)
         return jsonify({"msg": "Invalid file type!"}), 400
 
     file_dict[file_unique_id] = {
@@ -114,6 +125,7 @@ def upload():
         "caption": caption
     }), 200
 
+
 @app.route('/api/openai/upload', methods=['POST'])
 def openai_upload():
     prompt = request.json.get('prompt')
@@ -126,16 +138,26 @@ def openai_upload():
 
     skeleton_fil_name = f"{file_unique_id}-skeleton.png"
     skeleton_data_name = f"{file_unique_id}-data.pt"
-    skeletonize_img(input_path, app.config['RESULT_FOLDER'], skeleton_fil_name, skeleton_data_name, generation_settings)
+
+    generated = skeletonize_img(
+        input_path,
+        app.config['RESULT_FOLDER'],
+        skeleton_fil_name,
+        skeleton_data_name,
+        generation_settings,
+    )
 
     skeleton_path = os.path.join(app.config['RESULT_FOLDER'], skeleton_fil_name)
-    if os.path.exists(skeleton_path):
+    if generated and os.path.exists(skeleton_path):
         caption = describe_image(skeleton_path)
     else:
         os.remove(input_path)
         return jsonify({"msg": "Skeleton image was not generated."}), 500
 
-    file_dict[file_unique_id] = {"skeleton": skeleton_fil_name}
+    file_dict[file_unique_id] = {
+        "skeleton": skeleton_fil_name,
+        "point_data": skeleton_data_name,
+    }
     os.remove(input_path)
 
     return jsonify({
@@ -144,13 +166,16 @@ def openai_upload():
         "caption": caption
     }), 200
 
+
 @app.route('/api/view/<unique_id>', methods=['GET'])
 def view(unique_id):
     return get_file_response(unique_id)
 
+
 @app.route('/api/download/<unique_id>', methods=["GET"])
 def download(unique_id):
     return get_file_response(unique_id, as_attachment=True)
+
 
 @app.route('/api/download_data/<unique_id>', methods=["GET"])
 def download_data(unique_id):
@@ -160,8 +185,8 @@ def download_data(unique_id):
             return send_from_directory(app.config['RESULT_FOLDER'], file_name, as_attachment=True)
     return jsonify({"msg": "Data File Not Found!"}), 404
 
+
 if __name__ == "__main__":
-    # allow overriding port via environment variable (useful when the default port is occupied)
     port = int(os.getenv("PORT", "5001"))
     host = os.getenv("HOST", "0.0.0.0")
     debug = os.getenv("FLASK_DEBUG", "1") == "1"
