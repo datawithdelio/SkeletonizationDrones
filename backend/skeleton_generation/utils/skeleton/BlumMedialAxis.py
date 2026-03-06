@@ -74,7 +74,18 @@ class BlumMedialAxis:
 
     def calculate_ET_and_ST(self):
         edf = np.asarray(self.EDFArray, dtype=float)
-        radii = np.asarray(self.radiiArray, dtype=float)
+        radii_raw = np.asarray(self.radiiArray)
+        # Avoid implicit complex->float casting warnings from upstream geometry math.
+        # If the imaginary part is negligible, keep the real component; otherwise
+        # use magnitude so radii stay non-negative and physically meaningful.
+        if np.iscomplexobj(radii_raw):
+            radii_real = np.real_if_close(radii_raw, tol=1000)
+            if np.iscomplexobj(radii_real):
+                radii = np.abs(radii_raw).astype(float)
+            else:
+                radii = np.asarray(radii_real, dtype=float)
+        else:
+            radii = np.asarray(radii_raw, dtype=float)
         with np.errstate(divide="ignore", invalid="ignore"):
             self.erosionThickness = (edf - radii).tolist()
             st = 1 - np.divide(radii, edf, out=np.zeros_like(radii), where=edf != 0)

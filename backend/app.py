@@ -5,7 +5,11 @@ from skeleton_generation.skel import skeletonize_video, skeletonize_img
 import os
 import uuid
 import json
-from skeleton_generation.openai_creation import save_generation, describe_image
+from skeleton_generation.openai_creation import (
+    save_generation,
+    describe_image,
+    get_provider_status,
+)
 
 app = Flask(__name__)
 CORS(
@@ -184,6 +188,11 @@ def download_data(unique_id):
         if file_name and os.path.exists(os.path.join(app.config['RESULT_FOLDER'], file_name)):
             return send_from_directory(app.config['RESULT_FOLDER'], file_name, as_attachment=True)
     return jsonify({"msg": "Data File Not Found!"}), 404
+
+
+@app.route("/api/providers/status", methods=["GET"])
+def providers_status():
+    return jsonify(get_provider_status()), 200
 
 
 if __name__ == "__main__":

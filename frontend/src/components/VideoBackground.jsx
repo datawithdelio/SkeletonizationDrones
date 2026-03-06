@@ -46,11 +46,12 @@ const VideoBackground = () => {
                 autoPlay
                 muted
                 loop={false}
-                className="w-full h-full opacity-45 mx-auto my-auto object-cover"
+                className="w-full h-full opacity-45 mx-auto my-auto object-cover background-video"
             >
                 <source src={videos[currentVidIndex]} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
+            <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(2,7,10,0.36)_0%,rgba(2,7,10,0.54)_100%)]' />
         </div>
     );
 };
