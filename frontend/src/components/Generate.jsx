@@ -20,7 +20,10 @@ const Generate = () => {
     const [generationSettings, setGenerationSettings] = useState({
         confidence_level: 0.5,
         smoothing_factor: 7,
-        downsample: 1
+        downsample: 1,
+        max_instances: 3,
+        min_mask_area_ratio: 0.0008,
+        iou_threshold: 0.7,
     });
 
     const inputFileRef = useRef(null);
@@ -189,6 +192,18 @@ const Generate = () => {
                 <label>Downsample Factor:
                     <input className='mx-4' type='range' name='downsample' min='1' max='8' step='1' value={generationSettings.downsample} onChange={handleSettingsChange} />
                     {generationSettings.downsample}
+                </label>
+                <label>Max Instances:
+                    <input className='mx-4' type='range' name='max_instances' min='1' max='10' step='1' value={generationSettings.max_instances} onChange={handleSettingsChange} />
+                    {generationSettings.max_instances}
+                </label>
+                <label>Min Mask Area Ratio:
+                    <input className='mx-4' type='range' name='min_mask_area_ratio' min='0' max='0.01' step='0.0001' value={generationSettings.min_mask_area_ratio} onChange={handleSettingsChange} />
+                    {generationSettings.min_mask_area_ratio.toFixed(4)}
+                </label>
+                <label>IoU Threshold:
+                    <input className='mx-4' type='range' name='iou_threshold' min='0.1' max='0.95' step='0.05' value={generationSettings.iou_threshold} onChange={handleSettingsChange} />
+                    {generationSettings.iou_threshold.toFixed(2)}
                 </label>
             </div>
 

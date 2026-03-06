@@ -5,6 +5,25 @@ Scope
 - Backend algorithm modules in backend/skeleton_generation/utils/skeleton/
 - Frontend generation flow in frontend/src/components/Generate.jsx
 
+Metrics
+- Total files changed: 13
+- Backend algorithm files changed: 11
+- Frontend files changed: 1
+- Documentation files changed: 1
+- Lines added: 779
+- Lines removed: 562
+- Net line delta: +217
+- Largest file change by churn: branchesforbma.py (141 added, 115 removed)
+- Python modules compile-checked: 11
+- Frontend builds verified: 1 (`vite build` passed)
+
+Complexity / Scalability Metrics
+- dijkstra.py: O((V+E)logV) -> O((V+E)logV) (same asymptotic complexity, correctness + robustness improved)
+- calculate_medial_order.py memory path: dense NxN conversion removed
+  - Before: required dense matrix materialization (~O(N^2) memory)
+  - After: sparse-only path (no dense O(N^2) allocation)
+- sparse_to_csr.py: deterministic sorted CSR build, O(nz log nz) due sorting, with strict bounds validation
+
 Backend Improvements
 1) dijkstra.py
 - Replaced fragile custom heap logic with heapq-based Dijkstra.

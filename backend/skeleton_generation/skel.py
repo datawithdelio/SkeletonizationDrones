@@ -15,6 +15,90 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(current_directory, "utils", "models", "yolov8n-seg.onnx")
 
 
+def _get_setting(settings, key, default, cast_func):
+    if not isinstance(settings, dict):
+        return default
+    value = settings.get(key, default)
+    try:
+        return cast_func(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _contours_from_instance(instance, image_shape):
+    """Convert YOLO segmentation polygons to a cleaned binary mask."""
+    if instance is None or instance.masks is None or not instance.masks.xy:
+        return None
+
+    mask = np.zeros(image_shape[:2], dtype=np.uint8)
+    for poly in instance.masks.xy:
+        if poly is None or len(poly) < 3:
+            continue
+        contour = np.array(poly, dtype=np.int32).reshape(-1, 1, 2)
+        cv.drawContours(mask, [contour], -1, 255, cv.FILLED)
+
+    if not np.any(mask):
+        return None
+
+    # Clean isolated speckles and close small holes before contour extraction.
+    kernel = np.ones((3, 3), np.uint8)
+    mask = cv.morphologyEx(mask, cv.MORPH_OPEN, kernel, iterations=1)
+    mask = cv.morphologyEx(mask, cv.MORPH_CLOSE, kernel, iterations=2)
+    return mask
+
+
+def _mask_to_contour_strings(mask):
+    contour_strings = _contour_strings_from_binary_mask(mask)
+    return contour_strings if contour_strings else []
+
+
+def _instance_confidence(instance):
+    if instance is None or instance.boxes is None or instance.boxes.conf.numel() == 0:
+        return 0.0
+    return float(instance.boxes.conf[0])
+
+
+def _normalize_generation_settings(settings):
+    if not isinstance(settings, dict):
+        settings = {}
+
+    confidence_level = float(np.clip(_get_setting(settings, "confidence_level", 0.5, float), 0.01, 1.0))
+    smoothing_factor = float(np.clip(_get_setting(settings, "smoothing_factor", 7, float), 1.0, 30.0))
+    downsample = int(np.clip(_get_setting(settings, "downsample", 1, int), 1, 8))
+    max_instances = int(np.clip(_get_setting(settings, "max_instances", 3, int), 1, 10))
+    min_mask_area_ratio = float(np.clip(_get_setting(settings, "min_mask_area_ratio", 0.0008, float), 0.0, 0.05))
+    iou_threshold = float(np.clip(_get_setting(settings, "iou_threshold", 0.7, float), 0.05, 0.95))
+
+    return {
+        "confidence_level": confidence_level,
+        "smoothing_factor": smoothing_factor,
+        "downsample": downsample,
+        "max_instances": max_instances,
+        "min_mask_area_ratio": min_mask_area_ratio,
+        "iou_threshold": iou_threshold,
+    }
+
+
+def _extract_contour_strings_from_instance(instance, image):
+    """
+    Prefer direct mask contour extraction for geometric accuracy.
+    Fallback to legacy image-processing path if needed.
+    """
+    mask = _contours_from_instance(instance, image.shape)
+    if mask is not None:
+        contour_strings = _mask_to_contour_strings(mask)
+        if contour_strings:
+            return contour_strings
+
+    # Fallback: preserve prior behavior path if direct extraction is empty.
+    if mask is None:
+        return []
+    mask3ch = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
+    isolated = cv.bitwise_and(mask3ch, np.ones_like(image) * 255)
+    processed_img = process_image(isolated)
+    return processed_img.get("contour_strings", [])
+
+
 def filter_most_confident(detections):
     max_confidence = 0
     best_detection = None
@@ -47,7 +131,16 @@ def frame_reader(input_path, frame_queue, num_workers):
 
 
 def process_frame(frame_index, frame, model, generation_settings, points_data):
-    results = model.predict(frame, conf=generation_settings['confidence_level'], save=False, show=False, verbose=False)
+    params = _normalize_generation_settings(generation_settings)
+
+    confidence_level = params["confidence_level"]
+    smoothing_factor = params["smoothing_factor"]
+    downsample = params["downsample"]
+    max_instances = params["max_instances"]
+    min_mask_area_ratio = params["min_mask_area_ratio"]
+    iou_threshold = params["iou_threshold"]
+
+    results = model.predict(frame, conf=confidence_level, iou=iou_threshold, save=False, show=False, verbose=False)
 
     background = frame
     frame_results = []
@@ -63,29 +156,35 @@ def process_frame(frame_index, frame, model, generation_settings, points_data):
             continue
 
         img = np.copy(result.orig_img)
+        candidate_instances = sorted(
+            [c for c in result if c.masks is not None and c.masks.xy],
+            key=_instance_confidence,
+            reverse=True,
+        )[:max_instances]
 
-        for ci, c in enumerate(result):
-            if c.masks is None or not c.masks.xy:
+        for ci, c in enumerate(candidate_instances):
+            confidence = _instance_confidence(c)
+            if confidence < confidence_level:
                 continue
 
-            b_mask = np.zeros(img.shape[:2], np.uint8)
-            contour = np.array(c.masks.xy[0], dtype=np.int32).reshape(-1, 1, 2)
-            _ = cv.drawContours(b_mask, [contour], -1, (255, 255, 255), cv.FILLED)
+            mask = _contours_from_instance(c, img.shape)
+            if mask is None:
+                continue
 
-            mask3ch = cv.cvtColor(b_mask, cv.COLOR_GRAY2BGR)
-            white_inside_crop = np.ones_like(img) * 255
-            isolated = cv.bitwise_and(mask3ch, white_inside_crop)
+            min_pixels = int(mask.shape[0] * mask.shape[1] * min_mask_area_ratio)
+            if cv.countNonZero(mask) < min_pixels:
+                continue
 
-            processed_img = process_image(isolated)
-            if not processed_img["contour_strings"]:
+            contour_strings = _extract_contour_strings_from_instance(c, img)
+            if not contour_strings:
                 continue
 
             skel = generate_skeleton(
-                processed_img["contour_strings"],
+                contour_strings,
                 frame.shape[1],
                 frame.shape[0],
-                generation_settings['smoothing_factor'],
-                generation_settings['downsample'],
+                smoothing_factor,
+                downsample,
                 points_data,
             )
             overlayed = overlay_images(background, skel)
@@ -95,7 +194,7 @@ def process_frame(frame_index, frame, model, generation_settings, points_data):
             if overlayed.shape[2] == 4:
                 overlayed = cv.cvtColor(overlayed, cv.COLOR_BGRA2BGR)
 
-            if ci != (len(result.boxes) - 1):
+            if ci != (len(candidate_instances) - 1):
                 background = overlayed
             else:
                 frame_results.append(overlayed)
@@ -283,7 +382,16 @@ def skeletonize_img(input_path, output_path, file_name, skeleton_data_name, gene
         return False
 
     model = YOLO(model_path)
-    results = model.predict(original_img, conf=generation_settings['confidence_level'], save=False, show=False, verbose=False)
+    params = _normalize_generation_settings(generation_settings)
+
+    confidence_level = params["confidence_level"]
+    smoothing_factor = params["smoothing_factor"]
+    downsample = params["downsample"]
+    max_instances = params["max_instances"]
+    min_mask_area_ratio = params["min_mask_area_ratio"]
+    iou_threshold = params["iou_threshold"]
+
+    results = model.predict(original_img, conf=confidence_level, iou=iou_threshold, save=False, show=False, verbose=False)
 
     points_data = []
     background = original_img
@@ -294,29 +402,35 @@ def skeletonize_img(input_path, output_path, file_name, skeleton_data_name, gene
             continue
 
         img = np.copy(result.orig_img)
+        candidate_instances = sorted(
+            [c for c in result if c.masks is not None and c.masks.xy],
+            key=_instance_confidence,
+            reverse=True,
+        )[:max_instances]
 
-        for ci, c in enumerate(result):
-            if c.masks is None or not c.masks.xy:
+        for ci, c in enumerate(candidate_instances):
+            confidence = _instance_confidence(c)
+            if confidence < confidence_level:
                 continue
 
-            b_mask = np.zeros(img.shape[:2], np.uint8)
-            contour = np.array(c.masks.xy[0], dtype=np.int32).reshape(-1, 1, 2)
-            _ = cv.drawContours(b_mask, [contour], -1, (255, 255, 255), cv.FILLED)
+            mask = _contours_from_instance(c, img.shape)
+            if mask is None:
+                continue
 
-            mask3ch = cv.cvtColor(b_mask, cv.COLOR_GRAY2BGR)
-            white_inside_crop = np.ones_like(img) * 255
-            isolated = cv.bitwise_and(mask3ch, white_inside_crop)
+            min_pixels = int(mask.shape[0] * mask.shape[1] * min_mask_area_ratio)
+            if cv.countNonZero(mask) < min_pixels:
+                continue
 
-            processed_img = process_image(isolated)
-            if not processed_img["contour_strings"]:
+            contour_strings = _extract_contour_strings_from_instance(c, img)
+            if not contour_strings:
                 continue
 
             skel = generate_skeleton(
-                processed_img["contour_strings"],
+                contour_strings,
                 original_img.shape[1],
                 original_img.shape[0],
-                generation_settings['smoothing_factor'],
-                generation_settings['downsample'],
+                smoothing_factor,
+                downsample,
                 points_data,
             )
             overlayed = overlay_images(background, skel)
@@ -326,7 +440,7 @@ def skeletonize_img(input_path, output_path, file_name, skeleton_data_name, gene
             if overlayed.shape[2] == 4:
                 overlayed = cv.cvtColor(overlayed, cv.COLOR_BGRA2BGR)
 
-            if ci != (len(result.boxes) - 1):
+            if ci != (len(candidate_instances) - 1):
                 background = overlayed
             else:
                 cv.imwrite(os.path.join(output_path, file_name), overlayed)
@@ -339,8 +453,8 @@ def skeletonize_img(input_path, output_path, file_name, skeleton_data_name, gene
                 contour_strings,
                 original_img.shape[1],
                 original_img.shape[0],
-                generation_settings['smoothing_factor'],
-                generation_settings['downsample'],
+                smoothing_factor,
+                downsample,
                 points_data,
             )
             overlayed = overlay_images(original_img, skel)
