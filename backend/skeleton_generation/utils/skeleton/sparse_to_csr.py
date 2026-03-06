@@ -1,88 +1,81 @@
 import numpy as np
 
 
+def _validate_triplets(rows, cols, vals):
+    if rows.shape != cols.shape:
+        raise ValueError(
+            f"length of row indices ({rows.size}) not equal to column indices ({cols.size})"
+        )
+    if vals is not None and vals.shape != rows.shape:
+        raise ValueError(
+            f"length of values ({vals.size}) not equal to row indices ({rows.size})"
+        )
+    if rows.size > 0 and (rows.min() < 0 or cols.min() < 0):
+        raise ValueError("row and column indices must be >= 0")
+
+
 def sparse_to_csr(A, *args):
-    retc = (nargout := len(args)) > 1
-    reta = nargout > 2
+    """
+    Build CSR arrays from either a sparse matrix or triplet indices.
 
-    if len(args) > 0:
-        if len(args) > 3:
-            ncol = args[3]
+    Usage:
+      - sparse_to_csr(sparse_matrix) -> (rp, ci, ai)
+      - sparse_to_csr(nzi, nzj[, nzv[, nrow[, ncol]]]) -> rp or (rp, ci, ai, ncol)
+    """
+    if len(args) == 0:
+        # Sparse matrix input.
+        nrow, ncol = A.shape
+        coo = A.tocoo()
+        nzi = coo.row.astype(np.int64, copy=False)
+        nzj = coo.col.astype(np.int64, copy=False)
+        nzv = coo.data.astype(float, copy=False)
 
-        nzi = A
-        nzj = args[0]
+        order = np.lexsort((nzj, nzi))
+        nzi = nzi[order]
+        nzj = nzj[order]
+        nzv = nzv[order]
 
-        if reta and len(args) > 1:
-            nzv = args[1]
+        rp = np.zeros(nrow + 1, dtype=np.int64)
+        np.add.at(rp, nzi + 1, 1)
+        np.cumsum(rp, out=rp)
+        return rp, nzj, nzv
 
-        if len(args) < 3:
-            n = max(nzi)
-        else:
-            n = args[2]
+    # Triplet input.
+    nzi = np.asarray(A, dtype=np.int64).reshape(-1)
+    nzj = np.asarray(args[0], dtype=np.int64).reshape(-1)
+    nzv = None
 
-        nz = len(A)
+    has_values = len(args) >= 2 and args[1] is not None and np.asarray(args[1]).size > 0
+    if has_values:
+        nzv = np.asarray(args[1], dtype=float).reshape(-1)
 
-        if len(nzi) != len(nzj):
-            raise ValueError(
-                f"length of nzi ({nz}) not equal to length of nzj ({len(nzj)})"
-            )
+    _validate_triplets(nzi, nzj, nzv)
 
-        if reta and len(args) < 2:
-            raise ValueError("no value array passed for triplet input, see usage")
-
-        if not np.isscalar(n):
-            raise ValueError(
-                "the 4th input to sparse_to_csr with triple input was not a scalar"
-            )
-
-        if len(args) < 4:
-            ncol = max(nzj)
-        elif not np.isscalar(ncol):
-            raise ValueError(
-                "the 5th input to sparse_to_csr with triple input was not a scalar"
-            )
+    if len(args) >= 3:
+        nrow = int(args[2])
     else:
-        n = A.shape[0]
-        nz = A.nnz
-        ncol = A.shape[1]
-        retc = nargout > 1
-        reta = nargout > 2
+        nrow = int(nzi.max() + 1) if nzi.size > 0 else 0
 
-        if reta:
-            nzi, nzj, nzv = A.nonzero()
-        else:
-            nzi, nzj = A.nonzero()
-
-    if retc:
-        ci = np.zeros(nz, dtype=int)
-    if reta:
-        ai = np.zeros(nz)
-
-    rp = np.zeros(n + 1, dtype=int)
-
-    for i in range(nz):
-        rp[nzi[i] + 1] += 1
-
-    rp = np.cumsum(rp)
-
-    if not retc and not reta:
-        rp += 1
-        return rp
-
-    for i in range(nz):
-        if reta:
-            ai[rp[nzi[i]] + 1] = nzv[i]
-
-        ci[rp[nzi[i]] + 1] = nzj[i]
-        rp[nzi[i]] += 1
-
-    for i in range(n - 1, -1, -1):
-        rp[i + 1] = rp[i]
-
-    rp[0] = 0
-    rp += 1
-
-    if nargout > 1:
-        return rp, ci, ai, ncol
+    if len(args) >= 4:
+        ncol = int(args[3])
     else:
+        ncol = int(nzj.max() + 1) if nzj.size > 0 else 0
+
+    if nrow < 0 or ncol < 0:
+        raise ValueError("nrow and ncol must be non-negative")
+    if nzi.size > 0 and (nzi.max() >= nrow or nzj.max() >= ncol):
+        raise ValueError("triplet indices exceed provided matrix dimensions")
+
+    order = np.lexsort((nzj, nzi))
+    nzi = nzi[order]
+    nzj = nzj[order]
+    if nzv is not None:
+        nzv = nzv[order]
+
+    rp = np.zeros(nrow + 1, dtype=np.int64)
+    np.add.at(rp, nzi + 1, 1)
+    np.cumsum(rp, out=rp)
+
+    if nzv is None:
         return rp
+    return rp, nzj, nzv, ncol

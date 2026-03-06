@@ -85,7 +85,7 @@ def branchnew(mord, medial_data):
             if len(current) >= 2:
                 branches_list.append(current.T)
 
-    ranches_list = [branch for branch in branches_list if len(branch)]
+    branches_list = [branch for branch in branches_list if len(branch)]
 
     # remove any duplicate branches of length 2 from branchnubs
     dups = []
@@ -102,6 +102,8 @@ def branchnew(mord, medial_data):
     if len(dups):
         branchnubs = np.delete(branchnubs, dups, axis=1)
 
+    return branches_list, branchnubs
+
 
 def processbranches(
     branches: List[np.ndarray],
@@ -112,9 +114,9 @@ def processbranches(
     eps3: float,
 ):
     tanglenubs = np.abs(
-        np.arctan(
-            np.imag(branchnubs[0, :] - branchnubs[1, :])
-            / np.real(branchnubs[0, :] - branchnubs[1, :])
+        np.arctan2(
+            np.imag(branchnubs[0, :] - branchnubs[1, :]),
+            np.real(branchnubs[0, :] - branchnubs[1, :]),
         )
     )
     branchradii = np.zeros(branchnubs.shape)
@@ -140,7 +142,7 @@ def processbranches(
     for j in range(len(branchpointlist)):
         _, ind2 = np.where(branchnubs[0, :] == branchpointlist[j])
         nubpairs = np.array(list(combinations(ind2, 2)))
-        testind = []
+        valid_pairs = []
 
         for k in range(nubpairs.shape[0]):
             nubdiff_k = (
@@ -151,14 +153,11 @@ def processbranches(
             )
 
             if nubdiff_k < eps3 and radiidiff_k < eps2:
-                testind.append(k)
+                valid_pairs.append((k, radiidiff_k))
 
-        if len(testind) > 0:
-            (i1,) = np.where(
-                np.array([radiidiff_k for k in testind])
-                == np.min([radiidiff_k for k in testind])
-            )
-            ind2join.append(nubpairs[testind[i1[0]]])
+        if len(valid_pairs) > 0:
+            best_k = min(valid_pairs, key=lambda item: item[1])[0]
+            ind2join.append(nubpairs[best_k])
 
     branchnubnum = np.zeros(len(branchnubs[0]))
     for branchno in range(len(branches)):
@@ -191,13 +190,8 @@ def processbranches(
     for branchno in range(len(branches)):
         if len(branches[branchno]) >= 3:
             branchr = medialdata[np.isin(medialdata[:, 0], branches[branchno]), 1]
-            dv = np.abs(np.diff(np.unique(branches[branchno])))
-
-            (newind,) = np.where(
-                np.abs(-2 * branchr + np.roll(branchr, 1) + np.roll(branchr, -1) / dv)
-                > eps1
-            )
-            newind = newind[~np.isin(newind, [0, len(branchr) - 1])]
+            curvature = np.abs(branchr[:-2] - 2 * branchr[1:-1] + branchr[2:])
+            newind = np.where(curvature > eps1)[0] + 1
 
             if len(newind) < 0.34 * len(branches[branchno]):
                 for newbr in range(len(newind)):
@@ -206,3 +200,4 @@ def processbranches(
                     branches[branchno] = branches[branchno][: newind[newbr] + 1]
 
     processedbranches = branches + newbranch
+    return processedbranches

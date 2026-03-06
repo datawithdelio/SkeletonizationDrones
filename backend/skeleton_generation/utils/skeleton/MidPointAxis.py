@@ -1,10 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from calculate_medial_axis import calculate_medial_axis
-from calculate_medial_order import calculate_medial_order
 from scipy.spatial import ConvexHull
 
 from skeleton_generation.utils.skeleton.BlumMedialAxis import BlumMedialAxis
+from skeleton_generation.utils.skeleton.branchesforbma import calculate_branches_for_bma
+from skeleton_generation.utils.skeleton.calculateMidPointEDF import calculate_mid_point_edf
+from skeleton_generation.utils.skeleton.calculateWEDF import calculate_wedf
+from skeleton_generation.utils.skeleton.calculate_medial_axis import calculate_medial_axis
+from skeleton_generation.utils.skeleton.calculate_medial_order import calculate_medial_order
 
 
 class MidPointAxis:
@@ -33,7 +36,12 @@ class MidPointAxis:
             self.calculate_ETandST()
 
     def prune(self, et_ratio, st_threshold):
-        area = np.polyarea(np.real(self.boundary), np.imag(self.boundary))
+        x_coords = np.real(self.boundary)
+        y_coords = np.imag(self.boundary)
+        area = 0.5 * np.abs(
+            np.dot(x_coords, np.roll(y_coords, 1))
+            - np.dot(y_coords, np.roll(x_coords, 1))
+        )
         et_threshold = et_ratio * np.sqrt(area)
         indices_to_remove = np.where(
             (self.EDFArray < et_threshold) | (self.EDFArray < st_threshold)
@@ -51,37 +59,49 @@ class MidPointAxis:
         index = self.pointsArray.index(point)
         self.remove_at_index(index)
 
-    def remove_at_index(self, index):
-        point = self.pointsArray[index]
-        self.remove_from_medial_data(point)
-        del self.pointsArray[index]
-        del self.edgePointsArray[index]
-        del self.radiiArray[index]
-        del self.EDFArray[index]
-        del self.WEDFArray[index]
-        del self.indexOfBndryPoints[index]
-        del self.onMedialResidue[index]
-        del self.erosionThickness[index]
-        del self.shapeTubularity[index]
-        self.adjacencyMatrix = np.delete(self.adjacencyMatrix, index, axis=0)
-        self.adjacencyMatrix = np.delete(self.adjacencyMatrix, index, axis=1)
-        del self.pointType[index]
-        del self.branchNumber[index]
+    def remove_at_index(self, indices):
+        if isinstance(indices, tuple):
+            indices = indices[0]
+        if np.isscalar(indices):
+            indices = [int(indices)]
+        else:
+            indices = [int(i) for i in np.asarray(indices).flatten()]
+
+        for index in sorted(indices, reverse=True):
+            point = self.pointsArray[index]
+            self.remove_from_medial_data(point)
+            del self.pointsArray[index]
+            del self.edgePointsArray[index]
+            del self.radiiArray[index]
+            del self.EDFArray[index]
+            del self.WEDFArray[index]
+            del self.indexOfBndryPoints[index]
+            del self.onMedialResidue[index]
+            del self.erosionThickness[index]
+            del self.shapeTubularity[index]
+            self.adjacencyMatrix = np.delete(self.adjacencyMatrix, index, axis=0)
+            self.adjacencyMatrix = np.delete(self.adjacencyMatrix, index, axis=1)
+            del self.pointType[index]
+            if isinstance(self.branchNumber, list):
+                if index < len(self.branchNumber):
+                    del self.branchNumber[index]
+            elif np.asarray(self.branchNumber).ndim >= 1 and index < len(self.branchNumber):
+                self.branchNumber = np.delete(self.branchNumber, index, axis=0)
 
     def build_points(self, medial_data):
         mord = BlumMedialAxis.medial_order(medial_data)
 
-        for i in range(len(mord)):
+        for i in range(mord.shape[1]):
             point_a = mord[0, i]
             point_b = mord[1, i]
-            index_a, self = self.find_or_add(medial_data, point_a)
-            index_b, self = self.find_or_add(medial_data, point_b)
+            self.find_or_add(medial_data, point_a)
+            self.find_or_add(medial_data, point_b)
 
         self.adjacencyMatrix = np.zeros(
             (len(self.pointsArray), len(self.pointsArray)), dtype=bool
         )
 
-        for i in range(len(mord)):
+        for i in range(mord.shape[1]):
             index_m = self.pointsArray.index(mord[0, i])
             index_n = self.pointsArray.index(mord[1, i])
             self.adjacencyMatrix[index_m, index_n] = True
@@ -104,7 +124,16 @@ class MidPointAxis:
             self.indexOfBndryPoints.append(medial_data[index_in_md[0], 2:5])
             index = len(self.pointsArray) - 1
 
-        return index, self
+        return index
+
+    def branchesforbma(self):
+        return calculate_branches_for_bma(self)
+
+    def calculate_WEDF(self):
+        return calculate_wedf(self)
+
+    def calculate_MidPointEDF(self):
+        return calculate_mid_point_edf(self)
 
     def plot_with_edges(self):
         fig, ax = plt.subplots()
@@ -124,10 +153,11 @@ class MidPointAxis:
         l = len(self.pointsArray)
         mymin = np.min(self.EDFArray)
         mymax = np.max(self.EDFArray)
+        bndry_idx = np.asarray(self.indexOfBndryPoints)
         for i in range(l):
-            c1 = self.boundary[self.indexOfBndryPoints[i, 0]]
-            c2 = self.boundary[self.indexOfBndryPoints[i, 1]]
-            c3 = self.boundary[self.indexOfBndryPoints[i, 2]]
+            c1 = self.boundary[bndry_idx[i, 0]]
+            c2 = self.boundary[bndry_idx[i, 1]]
+            c3 = self.boundary[bndry_idx[i, 2]]
             ax.add_patch(
                 plt.Polygon(
                     np.column_stack(
@@ -158,10 +188,11 @@ class MidPointAxis:
         l = len(self.pointsArray)
         mymin = np.min(self.WEDFArray)
         mymax = np.max(self.WEDFArray)
+        bndry_idx = np.asarray(self.indexOfBndryPoints)
         for i in range(l):
-            c1 = self.boundary[self.indexOfBndryPoints[i, 0]]
-            c2 = self.boundary[self.indexOfBndryPoints[i, 1]]
-            c3 = self.boundary[self.indexOfBndryPoints[i, 2]]
+            c1 = self.boundary[bndry_idx[i, 0]]
+            c2 = self.boundary[bndry_idx[i, 1]]
+            c3 = self.boundary[bndry_idx[i, 2]]
             r = (self.WEDFArray[i] - mymin) / (mymax - mymin)
             ax.add_patch(
                 plt.Polygon(
@@ -211,7 +242,7 @@ class MidPointAxis:
     @staticmethod
     def medial_order(medial_data):
         mord = calculate_medial_order(medial_data)
-        i2 = np.where(mord[0, :] - mord[1, :] == 0)
+        i2 = np.where(mord[0, :] - mord[1, :] == 0)[0]
         mord = np.delete(mord, i2, axis=1)
         mord2 = mord.copy()
         for k in range(mord2.shape[1]):
@@ -220,5 +251,5 @@ class MidPointAxis:
                 mord = np.delete(mord, dd[0][1:], axis=1)
         return mord
 
-    def remove_from_medial_data(self, bma, point):
-        bma.medial_data = bma.medial_data[np.where(bma.medial_data[:, 0] != point)]
+    def remove_from_medial_data(self, point):
+        self.medialData = self.medialData[np.where(self.medialData[:, 0] != point)]

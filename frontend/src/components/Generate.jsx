@@ -12,10 +12,9 @@ const Generate = () => {
     const [fileURL, setFileURL] = useState('#');
     const [generating, setGenerating] = useState(false);
     const [generateDisabled, setGenerateDisabled] = useState(false);
-    const [isImage, setIsImage] = useState(null);
-    const [isVideo, setIsVideo] = useState(null);
-    const [prompt, setPrompt] = useState(null);
-    const [caption, setCaption] = useState(null);
+    const [isVideo, setIsVideo] = useState(false);
+    const [prompt, setPrompt] = useState('');
+    const [caption, setCaption] = useState('');
     const [dataURL, setDataURL] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [generationSettings, setGenerationSettings] = useState({
@@ -29,10 +28,14 @@ const Generate = () => {
 
     const handleSettingsChange = (event) => {
         const { name, value } = event.target;
+        const parsedValue = Number.parseFloat(value);
+        if (Number.isNaN(parsedValue)) {
+            return;
+        }
         setGenerateDisabled(false);
         setGenerationSettings(prev => ({
             ...prev,
-            [name]: parseFloat(value)
+            [name]: parsedValue
         }));
     };
 
@@ -46,6 +49,14 @@ const Generate = () => {
         setPrompt(e.target.value);
     };
 
+    const setGenerationResult = (id, nextCaption = '') => {
+        setFileURL(`${API_BASE_URL}/api/download/${id}`);
+        setDataURL(`${API_BASE_URL}/api/download_data/${id}`);
+        setViewURL(`${API_BASE_URL}/api/view/${id}`);
+        setCaption(nextCaption);
+        setDownloadReady(true);
+    };
+
     const handleFileChange = (event) => {
         const nextFile = event.target.files?.[0];
         if (!nextFile) {
@@ -53,37 +64,34 @@ const Generate = () => {
         }
 
         const type = nextFile.type;
-        setIsImage(type.startsWith('image/'));
         setIsVideo(type.startsWith('video/'));
         setGenerateDisabled(false);
         setErrorMessage(null);
         setDownloadReady(false);
-        setCaption(null);
+        setCaption('');
         setFile(nextFile);
     };
 
     const handleInput = () => inputFileRef.current.click();
 
     const handleAiGenerate = async () => {
-        if (!prompt) return alert("No Prompt!");
-        setIsImage(true);
+        const normalizedPrompt = prompt.trim();
+        if (!normalizedPrompt || generating) {
+            return;
+        }
         setIsVideo(false);
         setGenerateDisabled(true);
         setGenerating(true);
         setErrorMessage(null);
+        setDownloadReady(false);
 
         try {
             const res = await axios.post(`${API_BASE_URL}/api/openai/upload`, {
-                prompt,
+                prompt: normalizedPrompt,
                 generationSettings
             });
 
-            const id = res.data.id;
-            setFileURL(`${API_BASE_URL}/api/download/${id}`);
-            setDataURL(`${API_BASE_URL}/api/download_data/${id}`);
-            setViewURL(`${API_BASE_URL}/api/view/${id}`);
-            setCaption(res.data.caption);
-            setDownloadReady(true);
+            setGenerationResult(res.data.id, res.data.caption || '');
         } catch (err) {
             console.error('Error uploading prompt:', err);
             setDownloadReady(false);
@@ -94,6 +102,9 @@ const Generate = () => {
     };
 
     const handleGenerate = async () => {
+        if (generating) {
+            return;
+        }
         if (!file) {
             setErrorMessage('Select a file first.');
             return;
@@ -113,12 +124,7 @@ const Generate = () => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            const id = res.data.id;
-            setFileURL(`${API_BASE_URL}/api/download/${id}`);
-            setDataURL(`${API_BASE_URL}/api/download_data/${id}`);
-            setViewURL(`${API_BASE_URL}/api/view/${id}`);
-            setCaption(res.data.caption);
-            setDownloadReady(true);
+            setGenerationResult(res.data.id, res.data.caption || '');
         } catch (err) {
             console.error('Error uploading file:', err);
             setDownloadReady(false);
@@ -155,7 +161,7 @@ const Generate = () => {
                     <button onClick={handleInput} className='px-1 py-2 h-12 mx-5 bg-black border border-green-600 hover:bg-green-600 rounded-2xl text-xs shadow-md transition-all duration-500 font-light md:text-2xl md:mx-12 md:px-6'>
                         Upload File
                     </button>
-                    <button onClick={handleGenerate} disabled={generateDisabled} className='px-1 h-12 mx-5 bg-green-500 hover:bg-green-700 rounded-2xl text-xs font-light transition-all duration-500 md:text-2xl md:mx-12 md:px-6'>
+                    <button onClick={handleGenerate} disabled={generateDisabled || generating || !file} className='px-1 h-12 mx-5 bg-green-500 hover:bg-green-700 rounded-2xl text-xs font-light transition-all duration-500 md:text-2xl md:mx-12 md:px-6 disabled:cursor-not-allowed disabled:opacity-60'>
                         Generate Skeleton
                     </button>
                 </div>
@@ -164,8 +170,8 @@ const Generate = () => {
             <div className='flex flex-col w-full h-full justify-center items-center pt-14'>
                 <h2 className='font-normal text-xl'>Generate Image + Skeleton With AI:</h2>
                 <div className='flex flex-row items-center justify-center mt-3'>
-                    <input type='text' onChange={handlePromptChange} placeholder='Enter Image Prompt...' className='border rounded-xl border-white w-96 h-10 px-5 font-light mr-2' />
-                    <button className='bg-green-400 rounded-xl hover:bg-green-700 transition-all duration-500 w-10 h-11 inline-flex items-center justify-center' onClick={handleAiGenerate}>
+                    <input type='text' value={prompt} onChange={handlePromptChange} placeholder='Enter Image Prompt...' className='border rounded-xl border-white w-96 h-10 px-5 font-light mr-2' />
+                    <button className='bg-green-400 rounded-xl hover:bg-green-700 transition-all duration-500 w-10 h-11 inline-flex items-center justify-center disabled:cursor-not-allowed disabled:opacity-60' onClick={handleAiGenerate} disabled={generating || !prompt.trim()}>
                         <img src={sendButton} className='w-6 h-6' alt="Send" />
                     </button>
                 </div>

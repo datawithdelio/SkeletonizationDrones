@@ -36,6 +36,17 @@ class BlumMedialAxis:
             self.branches_for_bma()
             self.calculate_ET_and_ST()
 
+    def _sync_adjacency_aliases(self):
+        """Keep `adjacencyMatrix` and `adjacency_matrix` consistent."""
+        if hasattr(self, "adjacencyMatrix"):
+            adjacency = np.asarray(self.adjacencyMatrix, dtype=bool)
+        elif hasattr(self, "adjacency_matrix"):
+            adjacency = np.asarray(self.adjacency_matrix, dtype=bool)
+        else:
+            adjacency = np.zeros((len(self.pointsArray), len(self.pointsArray)), dtype=bool)
+        self.adjacencyMatrix = adjacency
+        self.adjacency_matrix = adjacency
+
     def prune(self, et_ratio, st_threshold):
         print("EDFArray:", self.EDFArray)   
         print("ShapeTubularity:", self.shapeTubularity)
@@ -62,12 +73,12 @@ class BlumMedialAxis:
 
 
     def calculate_ET_and_ST(self):
-        self.erosionThickness = [
-            edf - radius for edf, radius in zip(self.EDFArray, self.radiiArray)
-        ]
-        self.shapeTubularity = [
-            1 - radius / edf for radius, edf in zip(self.radiiArray, self.EDFArray)
-        ]
+        edf = np.asarray(self.EDFArray, dtype=float)
+        radii = np.asarray(self.radiiArray, dtype=float)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            self.erosionThickness = (edf - radii).tolist()
+            st = 1 - np.divide(radii, edf, out=np.zeros_like(radii), where=edf != 0)
+            self.shapeTubularity = st.tolist()
 
     def get_length(self):
         return len(self.pointsArray)
@@ -80,6 +91,7 @@ class BlumMedialAxis:
         if not isinstance(indices, list):
             indices = [indices]
 
+        self._sync_adjacency_aliases()
         for index in sorted(indices, reverse=True):
             point = self.pointsArray.pop(index)
             self.remove_from_medial_data(point)
@@ -90,11 +102,15 @@ class BlumMedialAxis:
             self.onMedialResidue.pop(index)
             self.erosionThickness.pop(index)
             self.shapeTubularity.pop(index)
-            self.adjacencyMatrix.pop(index)
-            for row in self.adjacencyMatrix:
-                row.pop(index)
+            self.adjacencyMatrix = np.delete(self.adjacencyMatrix, index, axis=0)
+            self.adjacencyMatrix = np.delete(self.adjacencyMatrix, index, axis=1)
             self.pointType = np.delete(self.pointType, index)  # ZG
-            self.branchNumber.pop(index)
+            if isinstance(self.branchNumber, list):
+                if index < len(self.branchNumber):
+                    self.branchNumber.pop(index)
+            else:
+                self.branchNumber = np.delete(self.branchNumber, index, axis=0)
+        self._sync_adjacency_aliases()
 
     def build_points(self, medial_data):
         mord = self.medial_order(medial_data)
@@ -108,15 +124,16 @@ class BlumMedialAxis:
                 index_a = self.find_or_add(medial_data, point_a)
                 index_b = self.find_or_add(medial_data, point_b)
 
-        self.adjacency_matrix = [
-            [False] * len(self.pointsArray) for _ in range(len(self.pointsArray))
-        ]
+        self.adjacencyMatrix = np.zeros(
+            (len(self.pointsArray), len(self.pointsArray)), dtype=bool
+        )
         for i in range(len(mord[0])):
             index_m = self.pointsArray.index(mord[0][i])
             index_n = self.pointsArray.index(mord[1][i])
 
-            self.adjacency_matrix[index_m][index_n] = True
-            self.adjacency_matrix[index_n][index_m] = True
+            self.adjacencyMatrix[index_m, index_n] = True
+            self.adjacencyMatrix[index_n, index_m] = True
+        self._sync_adjacency_aliases()
 
         inf = float("inf")
         self.onMedialResidue = [inf] * len(self.pointsArray)
@@ -231,7 +248,7 @@ class BlumMedialAxis:
                 markersize=15,
             )
             for j in range(i + 1, len(self.pointsArray)):
-                if self.adjacency_matrix[i][j]:
+                if self.adjacencyMatrix[i][j]:
                     x = np.real(self.pointsArray[i])
                     y = np.imag(self.pointsArray[i])
                     x2 = np.real(self.pointsArray[j])
@@ -262,7 +279,7 @@ class BlumMedialAxis:
 
         for i in range(len(self.pointsArray)):
             for j in range(i + 1, len(self.pointsArray)):
-                if self.adjacency_matrix[i][j]:
+                if self.adjacencyMatrix[i][j]:
                     ax.plot(
                         [np.real(self.pointsArray[i]), np.real(self.pointsArray[j])],
                         [np.imag(self.pointsArray[i]), np.imag(self.pointsArray[j])],
@@ -272,7 +289,9 @@ class BlumMedialAxis:
         plt.show()
 
     def find_constrained_ends(self):
-        return [i for i, row in enumerate(self.adjacency_matrix) if sum(row) == 1]
+        self._sync_adjacency_aliases()
+        degree = np.sum(self.adjacencyMatrix, axis=1)
+        return np.where(degree == 1)[0]
 
     @staticmethod
     def medial_axis(boundary):
@@ -297,4 +316,3 @@ class BlumMedialAxis:
         self.medial_data = self.medial_data[
             ~np.isin(self.medial_data[:, 0], point)
         ]  # ZG
-

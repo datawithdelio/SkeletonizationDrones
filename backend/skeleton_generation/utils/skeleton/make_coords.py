@@ -1,81 +1,59 @@
-import os
+from pathlib import Path
 
 import cv2
-import matplotlib.pyplot as plt
-import numpy as np
 
 
-def get_pixel_coordinates(image, scale_x, scale_y):
-    coords = []
-    for y in range(image.shape[0]):
-        for x in range(image.shape[1]):
-            if np.any(image[y, x] != [255, 255, 255]):
-                coords.append((x * scale_x, y * scale_y))
-    return coords
+TARGET_HEIGHT = 200
+IMAGES_DIRECTORY = Path("M-to-PY_Skel/original")
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".webp"}
 
 
-# Define the target height
-target_height = 200
+def extract_contours(image, target_height=TARGET_HEIGHT):
+    """Resize input image and extract external contours from Canny edges."""
+    if image is None:
+        raise ValueError("Input image cannot be None.")
+    if image.ndim < 2:
+        raise ValueError("Input image must be at least 2D.")
+    if target_height <= 0:
+        raise ValueError("target_height must be positive.")
 
-# Directory with images
-images_directory = "M-to-PY_Skel/original"
+    src_h, src_w = image.shape[:2]
+    target_width = max(1, int(target_height * (src_w / src_h)))
 
-# Loop over all files in the directory
-for filename in os.listdir(images_directory):
-    if not filename.endswith(".txt"):  # Check file extension
-        # Load the image
-        image_path = os.path.join(images_directory, filename)
-        image = cv2.imread(image_path)
+    resized = cv2.resize(image, (target_width, target_height), interpolation=cv2.INTER_AREA)
+    gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(gray, threshold1=30, threshold2=100)
 
-        aspect_ratio = image.shape[1] / image.shape[0]
-        target_width = int(target_height * aspect_ratio)
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    return contours, edges.shape[0]
 
-        # Calculate scale factors for x and y coordinates
-        scale_x = target_width / image.shape[1]
-        scale_y = target_height / image.shape[0]
 
-        # Resize the image while keeping the aspect ratio
-        resized_image = cv2.resize(image, (target_width, target_height))
+def write_contours_txt(contours, height, output_path):
+    """Write contour coordinates in the legacy y-flipped format."""
+    with output_path.open("w", encoding="utf-8") as handle:
+        for contour in contours:
+            points = contour.reshape(-1, 2)
+            for x, y in points:
+                handle.write(f"{float(x):.7e} {float(height - y):.7e}\n")
 
-        # Convert the image to grayscale
-        gray_image = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
 
-        # Apply edge detection
-        edges = cv2.Canny(gray_image, threshold1=30, threshold2=100)
+def process_directory(images_directory=IMAGES_DIRECTORY, target_height=TARGET_HEIGHT):
+    if not images_directory.exists():
+        raise FileNotFoundError(f"Directory not found: {images_directory}")
 
-        # Find contours
-        contours, _ = cv2.findContours(
-            edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
-        )
+    for image_path in sorted(images_directory.iterdir()):
+        if image_path.suffix.lower() not in IMAGE_EXTENSIONS:
+            continue
 
-        # Create a white image with the same dimensions as the resized image
-        white_image = np.ones_like(resized_image) * 255
+        image = cv2.imread(str(image_path))
+        if image is None:
+            # Keep batch processing resilient if one file is unreadable.
+            continue
 
-        # Draw blue contours on the white image
-        cv2.drawContours(white_image, contours, -1, (255, 0, 0), 1)
+        contours, height = extract_contours(image, target_height=target_height)
+        output_path = image_path.with_suffix(".txt")
+        write_contours_txt(contours, height, output_path)
 
-        # Now we use matplotlib to plot the image and add axes.
-        plt.figure(figsize=(5, 5))
 
-        # Set up axes
-        plt.axis([0, target_width, target_height, 0])
-
-        # Display the image
-        plt.imshow(cv2.cvtColor(white_image, cv2.COLOR_BGR2RGB))
-
-        # Get the coordinates of all non-white pixels in the image
-        coordinates = get_pixel_coordinates(white_image, scale_x, scale_y)
-
-        # Define the output text file path
-        output_txt_path = image_path.rsplit(".", 1)[0] + ".txt"
-
-        # Save the coordinates to a text file
-        with open(output_txt_path, "w") as f:
-            height = edges.shape[0]
-            for contour in contours:
-                for point in contour:
-                    f.write(
-                        "{:.7e} {:.7e}\n".format(
-                            float(point[0][0]), float(height - point[0][1])
-                        )
-                    )
+if __name__ == "__main__":
+    process_directory()

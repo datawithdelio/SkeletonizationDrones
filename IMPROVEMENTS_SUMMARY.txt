@@ -1,0 +1,76 @@
+SkeletonizationDrones - Improvement Summary
+Date: 2026-03-06
+
+Scope
+- Backend algorithm modules in backend/skeleton_generation/utils/skeleton/
+- Frontend generation flow in frontend/src/components/Generate.jsx
+
+Backend Improvements
+1) dijkstra.py
+- Replaced fragile custom heap logic with heapq-based Dijkstra.
+- Added CSR normalization and strict validation.
+- Fixed negative-weight checks and ensured deterministic return values.
+
+2) sparse_to_csr.py
+- Reworked CSR conversion for sparse matrix and triplet inputs.
+- Added dimension/index validation and deterministic ordering.
+- Fixed inconsistent return and indexing behavior.
+
+3) make_coords.py
+- Refactored into clear functions for contour extraction and export.
+- Removed dead plotting/unused pixel-scan code.
+- Added robust directory/file handling and safer batch processing.
+
+4) branchesforbma.py
+- Fixed shortest_path usage and predecessor/path reconstruction.
+- Corrected several indexing/argmin/path bugs.
+- Added adjacency shape validation helpers.
+
+5) calculateWEDF.py
+- Fixed parent resolution and in-place mutation assumptions.
+- Added point type compatibility handling and finite-value guards.
+- Improved stability of WEDF propagation.
+
+6) branchnew.py
+- Added missing return values from branchnew and processbranches.
+- Replaced unstable atan division with atan2.
+- Corrected branch-join selection and branch split logic.
+
+7) calculateMidPointEDF.py
+- Added compatibility for snake_case/camelCase attribute variants.
+- Fixed index handling and in-place remove flow.
+- Added explicit return behavior and safety checks.
+
+8) calculateMIDEDF.py
+- Replaced incomplete placeholder logic with full propagation logic.
+- Fixed mutation/index handling and compatibility paths.
+
+9) calculate_medial_order.py
+- Removed dense conversion of sparse products.
+- Kept the algorithm sparse for better memory scalability.
+
+10) MidPointAxis.py
+- Fixed imports and missing method hookups.
+- Repaired iteration/index removal logic and geometric area computation.
+- Improved robustness of plotting/index access.
+
+11) BlumMedialAxis.py
+- Synced adjacencyMatrix/adjacency_matrix aliases.
+- Hardened remove/update flows and ET/ST computation.
+- Reduced cross-module runtime breakage from naming mismatches.
+
+Frontend Improvements
+1) frontend/src/components/Generate.jsx
+- Consolidated result state updates.
+- Added safer input parsing and prompt/file guarding.
+- Prevented duplicate submissions during active generation.
+
+Validation
+- Python compile checks passed for updated backend modules.
+- Frontend production build passed.
+
+Net Effect
+- Better correctness and fewer runtime failures.
+- Improved robustness on edge cases and inconsistent object models.
+- Better scalability for larger graph/sparse workloads.
+- Cleaner maintainability and clearer algorithm behavior.
