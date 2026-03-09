@@ -106,14 +106,16 @@ def prepare_dataset(
     filename_col: str,
     label_col: str,
     daynight_col: str,
-    drone_values: List[str],
-    bird_values: List[str],
+    positive_values: List[str],
+    negative_values: List[str],
     day_values: List[str],
     night_values: List[str],
     default_period: str,
     copy_files: bool,
     dry_run: bool,
     skip_missing: bool,
+    positive_class_name: str,
+    negative_class_name: str,
 ) -> PrepareStats:
     header, rows = _load_rows(labels_file)
 
@@ -127,7 +129,7 @@ def prepare_dataset(
         raise KeyError(f"Could not find label column. Tried: {label_col}")
 
     for period in ["day", "night"]:
-        for klass in ["drones", "birds"]:
+        for klass in [positive_class_name, negative_class_name]:
             _ensure_dir(output_dir / period / klass)
 
     stats = PrepareStats()
@@ -136,10 +138,10 @@ def prepare_dataset(
         stats.rows += 1
 
         raw_label = _normalize(row.get(label_key, ""))
-        if raw_label in drone_values:
-            class_folder = "drones"
-        elif raw_label in bird_values:
-            class_folder = "birds"
+        if raw_label in positive_values:
+            class_folder = positive_class_name
+        elif raw_label in negative_values:
+            class_folder = negative_class_name
         else:
             stats.skipped_unmapped += 1
             continue
@@ -175,7 +177,7 @@ def prepare_dataset(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Convert Kaggle-style labeled dataset (CSV/XLSX) into day/night + drones/birds folder layout."
+        description="Convert Kaggle-style labeled dataset (CSV/XLSX) into day/night + binary class folder layout."
     )
     parser.add_argument("--labels-file", required=True, help="Path to labels .csv or .xlsx")
     parser.add_argument("--images-dir", required=True, help="Root folder containing images referenced in labels")
@@ -183,8 +185,10 @@ def main() -> None:
     parser.add_argument("--filename-col", default="filename")
     parser.add_argument("--label-col", default="label")
     parser.add_argument("--daynight-col", default="")
-    parser.add_argument("--drone-values", default="drone,uav,quadcopter")
-    parser.add_argument("--bird-values", default="bird")
+    parser.add_argument("--positive-class-name", default="drones")
+    parser.add_argument("--negative-class-name", default="birds")
+    parser.add_argument("--positive-values", default="drone,uav,quadcopter")
+    parser.add_argument("--negative-values", default="bird")
     parser.add_argument("--day-values", default="day,daytime")
     parser.add_argument("--night-values", default="night,nighttime,lowlight")
     parser.add_argument("--default-period", choices=["day", "night"], default="day")
@@ -200,14 +204,16 @@ def main() -> None:
         filename_col=args.filename_col,
         label_col=args.label_col,
         daynight_col=args.daynight_col,
-        drone_values=_split_values(args.drone_values),
-        bird_values=_split_values(args.bird_values),
+        positive_values=_split_values(args.positive_values),
+        negative_values=_split_values(args.negative_values),
         day_values=_split_values(args.day_values),
         night_values=_split_values(args.night_values),
         default_period=args.default_period,
         copy_files=not args.move,
         dry_run=args.dry_run,
         skip_missing=args.skip_missing,
+        positive_class_name=args.positive_class_name,
+        negative_class_name=args.negative_class_name,
     )
 
     print(

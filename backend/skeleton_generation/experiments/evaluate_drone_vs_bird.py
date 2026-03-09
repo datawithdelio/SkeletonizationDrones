@@ -74,19 +74,25 @@ def evaluate(
     iou: float,
     target_classes: List[int],
     night_mode: bool,
+    positive_dir_name: str,
+    negative_dir_name: str,
+    positive_label: str,
+    negative_label: str,
 ) -> Dict:
-    drone_dir = os.path.join(dataset_dir, "drones")
-    bird_dir = os.path.join(dataset_dir, "birds")
-    if not os.path.isdir(drone_dir) or not os.path.isdir(bird_dir):
-        raise FileNotFoundError("Dataset must contain `drones/` and `birds/` subfolders.")
+    positive_dir = os.path.join(dataset_dir, positive_dir_name)
+    negative_dir = os.path.join(dataset_dir, negative_dir_name)
+    if not os.path.isdir(positive_dir) or not os.path.isdir(negative_dir):
+        raise FileNotFoundError(
+            f"Dataset must contain `{positive_dir_name}/` and `{negative_dir_name}/` subfolders."
+        )
 
     model = YOLO(MODEL_PATH)
     stats = EvalStats()
     details = []
 
     for label_name, label_value, folder in [
-        ("drone", 1, drone_dir),
-        ("bird", 0, bird_dir),
+        (positive_label, 1, positive_dir),
+        (negative_label, 0, negative_dir),
     ]:
         for image_path in _collect_images(folder):
             image = cv.imread(image_path, cv.IMREAD_COLOR)
@@ -96,7 +102,13 @@ def evaluate(
                 image = _enhance_night_frame(image)
 
             pred = 1 if _predict_has_target(model, image, target_classes, confidence, iou) else 0
-            details.append({"image": image_path, "label": label_name, "pred": "drone" if pred else "bird"})
+            details.append(
+                {
+                    "image": image_path,
+                    "label": label_name,
+                    "pred": positive_label if pred else negative_label,
+                }
+            )
 
             if label_value == 1 and pred == 1:
                 stats.tp += 1
@@ -127,13 +139,17 @@ def evaluate(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate drone-vs-bird discrimination.")
-    parser.add_argument("--dataset-dir", required=True, help="Path containing drones/ and birds/ folders.")
+    parser = argparse.ArgumentParser(description="Evaluate binary object discrimination (e.g., cars/noncars, drones/birds).")
+    parser.add_argument("--dataset-dir", required=True, help="Path containing positive/negative class folders.")
     parser.add_argument("--confidence", type=float, default=0.30)
     parser.add_argument("--iou", type=float, default=0.65)
-    parser.add_argument("--target-classes", default="4", help="Comma-separated class IDs treated as drone-like.")
+    parser.add_argument("--target-classes", default="4", help="Comma-separated YOLO class IDs treated as positive.")
     parser.add_argument("--night-mode", action="store_true", help="Apply CLAHE-based night enhancement.")
-    parser.add_argument("--output", default="drone_vs_bird_report.json")
+    parser.add_argument("--positive-dir-name", default="drones")
+    parser.add_argument("--negative-dir-name", default="birds")
+    parser.add_argument("--positive-label", default="drone")
+    parser.add_argument("--negative-label", default="bird")
+    parser.add_argument("--output", default="binary_eval_report.json")
     args = parser.parse_args()
 
     target_classes = [int(x.strip()) for x in args.target_classes.split(",") if x.strip()]
@@ -143,6 +159,10 @@ def main():
         iou=args.iou,
         target_classes=target_classes,
         night_mode=args.night_mode,
+        positive_dir_name=args.positive_dir_name,
+        negative_dir_name=args.negative_dir_name,
+        positive_label=args.positive_label,
+        negative_label=args.negative_label,
     )
 
     with open(args.output, "w", encoding="utf-8") as f:

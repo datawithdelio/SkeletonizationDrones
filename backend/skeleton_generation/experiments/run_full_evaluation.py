@@ -98,6 +98,37 @@ def _iter_splits(dataset_dir: str) -> List[Tuple[str, str, str]]:
     )
 
 
+def _iter_splits_with_class_names(
+    dataset_dir: str,
+    positive_dir_name: str,
+    negative_dir_name: str,
+) -> List[Tuple[str, str, str]]:
+    day_pos = os.path.join(dataset_dir, "day", positive_dir_name)
+    day_neg = os.path.join(dataset_dir, "day", negative_dir_name)
+    night_pos = os.path.join(dataset_dir, "night", positive_dir_name)
+    night_neg = os.path.join(dataset_dir, "night", negative_dir_name)
+
+    splits = []
+    if os.path.isdir(day_pos) and os.path.isdir(day_neg):
+        splits.append(("day", day_pos, day_neg))
+    if os.path.isdir(night_pos) and os.path.isdir(night_neg):
+        splits.append(("night", night_pos, night_neg))
+
+    if splits:
+        return splits
+
+    root_pos = os.path.join(dataset_dir, positive_dir_name)
+    root_neg = os.path.join(dataset_dir, negative_dir_name)
+    if os.path.isdir(root_pos) and os.path.isdir(root_neg):
+        return [("all", root_pos, root_neg)]
+    raise FileNotFoundError(
+        "Dataset layout not found. Expected either "
+        f"`{dataset_dir}/day/{positive_dir_name}` + `{dataset_dir}/day/{negative_dir_name}` "
+        f"and optional night split, or root folders "
+        f"`{dataset_dir}/{positive_dir_name}` + `{dataset_dir}/{negative_dir_name}`."
+    )
+
+
 def run_evaluation(
     dataset_dir: str,
     output_dir: str,
@@ -105,6 +136,10 @@ def run_evaluation(
     iou: float,
     target_classes: List[int],
     benchmark_image: str = "",
+    positive_dir_name: str = "drones",
+    negative_dir_name: str = "birds",
+    positive_label: str = "drone",
+    negative_label: str = "bird",
 ):
     os.makedirs(output_dir, exist_ok=True)
 
@@ -123,13 +158,17 @@ def run_evaluation(
     agg_latencies = []
     agg_detections_conf = []
 
-    for split_name, drones_dir, birds_dir in _iter_splits(dataset_dir):
+    for split_name, positive_dir, negative_dir in _iter_splits_with_class_names(
+        dataset_dir,
+        positive_dir_name=positive_dir_name,
+        negative_dir_name=negative_dir_name,
+    ):
         split_conf = Confusion()
         split_lat = []
         split_best_conf = []
         sample_rows = []
 
-        for label_name, label_value, folder in [("drone", 1, drones_dir), ("bird", 0, birds_dir)]:
+        for label_name, label_value, folder in [(positive_label, 1, positive_dir), (negative_label, 0, negative_dir)]:
             for image_path in _collect_images(folder):
                 image = cv.imread(image_path, cv.IMREAD_COLOR)
                 if image is None:
@@ -159,7 +198,7 @@ def run_evaluation(
                     {
                         "image": image_path,
                         "label": label_name,
-                        "prediction": "drone" if pred else "bird",
+                        "prediction": positive_label if pred else negative_label,
                         "latency_ms": latency_ms,
                         "best_confidence": best_conf,
                         "boxes_count": boxes_count,
@@ -216,13 +255,17 @@ def run_evaluation(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Strict evaluation runner for day/night drone-vs-bird + latency.")
+    parser = argparse.ArgumentParser(description="Strict evaluation runner for binary object classes + day/night + latency.")
     parser.add_argument("--dataset-dir", required=True)
     parser.add_argument("--output-dir", default="evaluation_outputs")
     parser.add_argument("--confidence", type=float, default=0.30)
     parser.add_argument("--iou", type=float, default=0.65)
     parser.add_argument("--target-classes", default="4")
     parser.add_argument("--benchmark-image", default="", help="Optional image path for method comparison table.")
+    parser.add_argument("--positive-dir-name", default="drones")
+    parser.add_argument("--negative-dir-name", default="birds")
+    parser.add_argument("--positive-label", default="drone")
+    parser.add_argument("--negative-label", default="bird")
     args = parser.parse_args()
 
     target_classes = [int(x.strip()) for x in args.target_classes.split(",") if x.strip()]
@@ -233,6 +276,10 @@ def main():
         iou=args.iou,
         target_classes=target_classes,
         benchmark_image=args.benchmark_image,
+        positive_dir_name=args.positive_dir_name,
+        negative_dir_name=args.negative_dir_name,
+        positive_label=args.positive_label,
+        negative_label=args.negative_label,
     )
     print(f"Saved strict evaluation report: {out_json}")
 

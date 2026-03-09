@@ -32,11 +32,11 @@ class Stats:
     skipped_unreadable: int = 0
 
 
-def _classify(path_text: str, drone_keys: List[str], bird_keys: List[str]) -> str:
-    if _has_any(path_text, drone_keys):
-        return "drones"
-    if _has_any(path_text, bird_keys):
-        return "birds"
+def _classify(path_text: str, positive_keys: List[str], negative_keys: List[str], positive_name: str, negative_name: str) -> str:
+    if _has_any(path_text, positive_keys):
+        return positive_name
+    if _has_any(path_text, negative_keys):
+        return negative_name
     return ""
 
 
@@ -79,15 +79,17 @@ def _extract_frames(
 def prepare(
     input_dir: Path,
     output_dir: Path,
-    drone_keywords: List[str],
-    bird_keywords: List[str],
+    positive_keywords: List[str],
+    negative_keywords: List[str],
     night_keywords: List[str],
     frame_step: int,
     max_frames_per_video: int,
+    positive_class_name: str,
+    negative_class_name: str,
 ):
     output_dir.mkdir(parents=True, exist_ok=True)
     for period in ("day", "night"):
-        for klass in ("drones", "birds"):
+        for klass in (positive_class_name, negative_class_name):
             (output_dir / period / klass).mkdir(parents=True, exist_ok=True)
 
     stats = Stats()
@@ -100,7 +102,7 @@ def prepare(
             continue
 
         rel = str(src.relative_to(input_dir))
-        klass = _classify(rel, drone_keywords, bird_keywords)
+        klass = _classify(rel, positive_keywords, negative_keywords, positive_class_name, negative_class_name)
         if not klass:
             stats.skipped_unmapped += 1
             continue
@@ -134,18 +136,14 @@ def prepare(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Prepare day/night drone-vs-bird evaluation dataset from mixed image/video media."
+        description="Prepare day/night binary evaluation dataset from mixed image/video media."
     )
     parser.add_argument("--input-dir", required=True, help="Input root directory with media.")
     parser.add_argument("--output-dir", required=True, help="Output evaluation dataset root.")
-    parser.add_argument(
-        "--drone-keywords",
-        default="drone,uav,quadcopter,hexacopter,swarm,recreational drones,high-end camera drones,fixed wing",
-    )
-    parser.add_argument(
-        "--bird-keywords",
-        default="bird,fighter,jet,missile,munition,plane",
-    )
+    parser.add_argument("--positive-class-name", default="drones")
+    parser.add_argument("--negative-class-name", default="birds")
+    parser.add_argument("--positive-keywords", default="drone,uav,quadcopter,hexacopter,swarm")
+    parser.add_argument("--negative-keywords", default="bird")
     parser.add_argument("--night-keywords", default="night,lowlight,dark")
     parser.add_argument("--frame-step", type=int, default=20, help="Sample every Nth frame.")
     parser.add_argument("--max-frames-per-video", type=int, default=20)
@@ -154,11 +152,13 @@ def main():
     stats = prepare(
         input_dir=Path(args.input_dir),
         output_dir=Path(args.output_dir),
-        drone_keywords=_split_csv(args.drone_keywords),
-        bird_keywords=_split_csv(args.bird_keywords),
+        positive_keywords=_split_csv(args.positive_keywords),
+        negative_keywords=_split_csv(args.negative_keywords),
         night_keywords=_split_csv(args.night_keywords),
         frame_step=args.frame_step,
         max_frames_per_video=args.max_frames_per_video,
+        positive_class_name=args.positive_class_name,
+        negative_class_name=args.negative_class_name,
     )
 
     print(

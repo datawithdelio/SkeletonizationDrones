@@ -37,14 +37,14 @@ Prints detection boxes, confidences, and class IDs as JSON.
 
 Use `skeleton_generation/utils/tracking/trajectory.py` to estimate heading angle and short-term predicted position from tracked 2D points.
 
-## 4) Evaluate Drone-vs-Bird (Reviewer-Focused)
+## 4) Evaluate Binary Classes (Configurable)
 
 Dataset layout:
 
 ```text
 your_dataset/
-  drones/
-  birds/
+  <positive_class>/
+  <negative_class>/
 ```
 
 Run:
@@ -56,15 +56,19 @@ python -m skeleton_generation.experiments.evaluate_drone_vs_bird \
   --confidence 0.30 \
   --iou 0.65 \
   --target-classes 4 \
+  --positive-dir-name cars \
+  --negative-dir-name noncars \
+  --positive-label car \
+  --negative-label noncar \
   --night-mode \
-  --output drone_vs_bird_report.json
+  --output binary_eval_report.json
 ```
 
 Notes:
-- `target-classes 4` maps to YOLO airplane-like class in this model setup.
+- `target-classes` should match your positive object class IDs in YOLO.
 - Use `--night-mode` for low-light enhancement before inference.
 
-## 5) Predict Drone Trajectory From Video
+## 5) Predict Object Trajectory From Video
 
 ```bash
 cd backend
@@ -86,18 +90,18 @@ Outputs per tracked frame:
 - detection confidence
 - (kalman mode) heading/speed confidence + covariance traces
 
-## 6) Strict Evaluation Pipeline (Day/Night + Confusion + Latency)
+## 6) Strict Evaluation Pipeline (Day/Night + Confusion + Latency, Configurable)
 
 Dataset layout (preferred):
 
 ```text
 your_dataset/
   day/
-    drones/
-    birds/
+    <positive_class>/
+    <negative_class>/
   night/
-    drones/
-    birds/
+    <positive_class>/
+    <negative_class>/
 ```
 
 Run:
@@ -110,6 +114,10 @@ python -m skeleton_generation.experiments.run_full_evaluation \
   --confidence 0.30 \
   --iou 0.65 \
   --target-classes 4 \
+  --positive-dir-name cars \
+  --negative-dir-name noncars \
+  --positive-label car \
+  --negative-label noncar \
   --benchmark-image ../airplane_test.png
 ```
 
@@ -166,7 +174,7 @@ Each JSONL row is a compressed telemetry summary window with:
 - infer latency
 - predicted position + confidence
 
-## 9) Prepare Kaggle Dataset (CSV/XLSX -> day/night drones/birds)
+## 9) Prepare Kaggle Dataset (CSV/XLSX -> day/night + binary classes)
 
 If your Kaggle dataset has labels in CSV/XLSX:
 
@@ -179,8 +187,10 @@ python -m skeleton_generation.experiments.prepare_kaggle_dataset \
   --filename-col filename \
   --label-col label \
   --daynight-col time_of_day \
-  --drone-values drone,uav,quadcopter \
-  --bird-values bird \
+  --positive-class-name cars \
+  --negative-class-name noncars \
+  --positive-values car,vehicle,automobile \
+  --negative-values noncar,bird,drone \
   --day-values day,daytime \
   --night-values night,nighttime,lowlight
 ```
