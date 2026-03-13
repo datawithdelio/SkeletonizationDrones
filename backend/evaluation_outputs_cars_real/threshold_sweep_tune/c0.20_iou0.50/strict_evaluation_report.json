@@ -1,0 +1,4887 @@
+{
+  "dataset_dir": "./datasets/cars_noncars_daynight_tune",
+  "target_classes": [
+    2,
+    3,
+    5,
+    7
+  ],
+  "confidence": 0.2,
+  "iou": 0.5,
+  "splits": {
+    "day": {
+      "samples": 400,
+      "confusion_matrix": {
+        "tp": 84,
+        "tn": 199,
+        "fp": 1,
+        "fn": 116
+      },
+      "metrics": {
+        "precision": 0.9882,
+        "recall": 0.42,
+        "f1": 0.5895,
+        "accuracy": 0.7075
+      },
+      "latency_ms": {
+        "mean": 354.904,
+        "p95": 755.148
+      },
+      "detection_confidence": {
+        "mean": 0.7659,
+        "count": 85
+      },
+      "details": [
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00003.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 1103.519,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00006.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 362.55,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00008.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 294.158,
+          "best_confidence": 0.8537,
+          "boxes_count": 6
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00009.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 260.996,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00012.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 330.789,
+          "best_confidence": 0.0,
+          "boxes_count": 6
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00016.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 263.294,
+          "best_confidence": 0.926,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00018.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 242.878,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00023.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 243.579,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00026.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 253.973,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00029.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 257.198,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00034.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 240.277,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00038.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 238.906,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00040.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 248.211,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00046.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 243.746,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00058.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 300.895,
+          "best_confidence": 0.7069,
+          "boxes_count": 6
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00060.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 273.034,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00061.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 296.135,
+          "best_confidence": 0.8993,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00065.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 247.989,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00068.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 335.803,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00069.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 299.827,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00075.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 374.322,
+          "best_confidence": 0.8094,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00084.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 306.371,
+          "best_confidence": 0.6208,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00090.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 276.867,
+          "best_confidence": 0.9055,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00092.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 276.134,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00093.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 245.826,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00096.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 244.234,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00113.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 268.413,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00115.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 283.34,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00118.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 272.737,
+          "best_confidence": 0.7061,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00119.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 262.978,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00120.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 277.218,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00121.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 327.26,
+          "best_confidence": 0.869,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00122.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 270.949,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00132.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 252.399,
+          "best_confidence": 0.6125,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00133.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 227.325,
+          "best_confidence": 0.8901,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00145.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 316.518,
+          "best_confidence": 0.9108,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00147.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 376.409,
+          "best_confidence": 0.6353,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00157.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 308.787,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00163.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 410.477,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00164.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 300.133,
+          "best_confidence": 0.8961,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00171.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 279.893,
+          "best_confidence": 0.3053,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00175.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 409.127,
+          "best_confidence": 0.8445,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00177.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 515.828,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00180.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 441.409,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00181.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 831.035,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00184.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 646.258,
+          "best_confidence": 0.8154,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00186.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 775.489,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00187.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 796.19,
+          "best_confidence": 0.9235,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00188.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 353.339,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00196.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 279.604,
+          "best_confidence": 0.9088,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00201.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 339.327,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00203.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 308.79,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00208.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 420.34,
+          "best_confidence": 0.8705,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00220.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 319.559,
+          "best_confidence": 0.908,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00228.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 234.018,
+          "best_confidence": 0.8776,
+          "boxes_count": 5
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00232.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 245.355,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00241.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 266.29,
+          "best_confidence": 0.7726,
+          "boxes_count": 7
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00245.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 245.126,
+          "best_confidence": 0.8833,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00248.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 272.931,
+          "best_confidence": 0.9022,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00249.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 334.377,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00250.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 323.845,
+          "best_confidence": 0.8829,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00252.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 307.321,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00254.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 345.321,
+          "best_confidence": 0.8181,
+          "boxes_count": 5
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00256.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 304.096,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00257.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 329.285,
+          "best_confidence": 0.9204,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00261.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 267.728,
+          "best_confidence": 0.5899,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00262.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 247.986,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00264.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 224.45,
+          "best_confidence": 0.7721,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00267.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 260.941,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00270.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 230.92,
+          "best_confidence": 0.0,
+          "boxes_count": 5
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00271.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 273.218,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00272.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 257.404,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00276.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 205.811,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00292.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 192.016,
+          "best_confidence": 0.6077,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00293.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 208.238,
+          "best_confidence": 0.9102,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00296.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 241.891,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00304.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 250.178,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00305.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 241.466,
+          "best_confidence": 0.8315,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00308.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 244.044,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00309.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 229.585,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00311.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 261.903,
+          "best_confidence": 0.911,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00312.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 232.975,
+          "best_confidence": 0.8925,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00314.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 212.209,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00315.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 251.943,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00317.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 228.443,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00318.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 232.183,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00322.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 209.608,
+          "best_confidence": 0.8838,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00336.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 273.758,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00338.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 218.422,
+          "best_confidence": 0.8526,
+          "boxes_count": 5
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00339.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 224.889,
+          "best_confidence": 0.84,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00342.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 227.61,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00345.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 252.502,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00359.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 231.547,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00370.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 193.407,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00373.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 253.067,
+          "best_confidence": 0.8662,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00377.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 246.794,
+          "best_confidence": 0.8744,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00386.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 218.401,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00389.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 261.915,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00391.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 358.22,
+          "best_confidence": 0.2204,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00392.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 228.814,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00393.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 240.937,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00395.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 231.06,
+          "best_confidence": 0.2905,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00398.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 235.497,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00401.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 282.561,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00402.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 263.911,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00404.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 262.574,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00407.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 294.034,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00408.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 216.572,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00409.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 312.622,
+          "best_confidence": 0.8976,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00410.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 210.743,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00413.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 182.468,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00418.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 194.289,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00419.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 183.31,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00420.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 221.253,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00426.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 265.282,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00427.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 210.406,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00428.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 253.303,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00429.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 391.405,
+          "best_confidence": 0.881,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00430.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 234.351,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00432.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 308.389,
+          "best_confidence": 0.2747,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00434.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 212.953,
+          "best_confidence": 0.9055,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00445.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 259.629,
+          "best_confidence": 0.8644,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00450.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 222.26,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00453.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 301.786,
+          "best_confidence": 0.0,
+          "boxes_count": 5
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00457.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 257.647,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00462.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 233.24,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00466.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 373.746,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00467.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 259.367,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00468.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 262.897,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00478.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 185.067,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00482.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 247.921,
+          "best_confidence": 0.8001,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00483.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 190.757,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00485.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 211.126,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00486.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 224.812,
+          "best_confidence": 0.8676,
+          "boxes_count": 5
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00487.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 232.684,
+          "best_confidence": 0.4858,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00488.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 226.932,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00490.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 234.189,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00492.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 229.059,
+          "best_confidence": 0.4301,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00494.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 196.14,
+          "best_confidence": 0.8906,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00497.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 226.165,
+          "best_confidence": 0.8046,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00499.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 229.969,
+          "best_confidence": 0.2864,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00502.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 209.427,
+          "best_confidence": 0.8959,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00503.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 229.021,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00504.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 274.03,
+          "best_confidence": 0.8904,
+          "boxes_count": 7
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00506.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 293.726,
+          "best_confidence": 0.8922,
+          "boxes_count": 6
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00508.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 249.433,
+          "best_confidence": 0.8024,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00509.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 231.51,
+          "best_confidence": 0.5332,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00511.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 278.316,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00516.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 208.947,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00523.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 248.604,
+          "best_confidence": 0.5114,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00526.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 217.509,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00532.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 211.971,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00533.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 231.278,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00539.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 211.522,
+          "best_confidence": 0.7945,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00541.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 255.625,
+          "best_confidence": 0.6914,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00548.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 215.176,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00550.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 256.222,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00555.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 288.805,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00560.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 238.662,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00567.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 192.991,
+          "best_confidence": 0.8688,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00569.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 267.526,
+          "best_confidence": 0.8746,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00575.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 208.092,
+          "best_confidence": 0.9015,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00577.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 202.898,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00579.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 186.567,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00580.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 249.075,
+          "best_confidence": 0.3527,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00582.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 182.682,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00583.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 255.926,
+          "best_confidence": 0.8716,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00590.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 227.518,
+          "best_confidence": 0.8161,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00591.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 232.028,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00592.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 209.958,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00595.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 226.491,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00602.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 209.188,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00612.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 228.561,
+          "best_confidence": 0.8105,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00616.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 205.53,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00618.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 209.689,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00620.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 190.001,
+          "best_confidence": 0.8843,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00633.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 195.365,
+          "best_confidence": 0.9082,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00634.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 227.652,
+          "best_confidence": 0.5092,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00641.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 1140.843,
+          "best_confidence": 0.3583,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00646.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 617.618,
+          "best_confidence": 0.8844,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00647.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 236.553,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00650.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 327.391,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00653.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 310.06,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00657.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 243.17,
+          "best_confidence": 0.7327,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00662.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 253.629,
+          "best_confidence": 0.8796,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00667.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 258.705,
+          "best_confidence": 0.8992,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00671.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 299.272,
+          "best_confidence": 0.8912,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00675.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 248.684,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00676.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 253.765,
+          "best_confidence": 0.8422,
+          "boxes_count": 6
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00678.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 250.62,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00680.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 275.509,
+          "best_confidence": 0.8657,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00681.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 249.475,
+          "best_confidence": 0.2244,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00682.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 276.681,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00683.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 249.162,
+          "best_confidence": 0.8724,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00687.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 252.987,
+          "best_confidence": 0.8683,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00690.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 258.21,
+          "best_confidence": 0.8944,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00691.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 257.631,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00693.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 257.827,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00694.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 283.324,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/cars/day_cars_00698.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 364.934,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00004.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 361.086,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00010.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 254.282,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00012.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 242.466,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00014.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 256.666,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00018.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 255.774,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00019.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 238.954,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00020.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 246.719,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00021.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 264.986,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00023.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 237.944,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00025.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 253.077,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00035.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 329.947,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00037.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 282.751,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00039.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 263.651,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00040.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 552.126,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00044.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 282.665,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00047.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 344.816,
+          "best_confidence": 0.0,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00061.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 466.595,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00066.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 287.794,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00075.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 382.789,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00078.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 772.395,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00082.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 492.739,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00086.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 419.072,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00087.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 413.476,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00090.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 755.111,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00096.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 1004.167,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00099.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 1182.048,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00106.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 1540.842,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00107.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 523.042,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00109.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 601.864,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00121.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 1180.773,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00124.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 510.086,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00131.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 460.499,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00139.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 465.783,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00145.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 618.571,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00146.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 369.123,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00148.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 682.904,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00155.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 790.219,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00157.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 825.987,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00163.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 400.572,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00165.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 353.372,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00171.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 902.666,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00177.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 467.502,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00184.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 562.363,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00185.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 1668.446,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00188.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 1681.318,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00195.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 949.422,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00205.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 779.433,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00207.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 612.731,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00211.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 616.558,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00214.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 545.738,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00222.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 548.423,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00224.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 1685.751,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00239.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 755.148,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00241.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 473.263,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00243.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 509.717,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00248.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 439.857,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00249.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 415.773,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00250.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 358.064,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00252.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 385.904,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00253.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 508.552,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00256.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 388.549,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00258.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 635.855,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00259.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 433.932,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00267.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 517.773,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00274.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 481.144,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00275.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 452.599,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00276.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 1001.135,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00281.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 836.689,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00285.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 513.072,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00286.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 633.867,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00294.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 442.021,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00295.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 460.566,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00296.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 311.332,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00297.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 384.61,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00298.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 400.529,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00299.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 578.872,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00300.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 533.654,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00309.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 370.959,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00317.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 392.343,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00320.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 315.107,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00328.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 329.89,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00330.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 394.304,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00333.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 420.952,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00336.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 333.71,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00338.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 387.007,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00339.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 391.205,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00341.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 306.225,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00345.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 352.621,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00357.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 343.499,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00361.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 450.755,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00362.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 380.228,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00363.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 400.973,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00365.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 404.062,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00367.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 325.646,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00368.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 403.367,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00369.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 332.901,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00375.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 312.689,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00376.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 457.325,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00378.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 404.094,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00379.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 373.558,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00380.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 327.266,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00384.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 307.534,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00387.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 353.584,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00391.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 330.744,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00395.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 269.781,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00400.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 305.042,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00407.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 337.022,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00410.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 345.572,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00434.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 402.023,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00443.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 329.903,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00446.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 365.937,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00447.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 384.93,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00450.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 326.859,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00455.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 362.557,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00458.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 364.792,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00460.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 314.469,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00462.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 364.435,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00463.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 439.821,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00467.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 399.649,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00468.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 413.775,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00471.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 349.945,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00475.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 311.042,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00476.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 297.828,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00478.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 329.295,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00480.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 275.187,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00487.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 308.0,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00488.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 332.951,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00491.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 352.185,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00498.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 331.344,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00502.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 312.737,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00506.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 381.884,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00509.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 307.107,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00512.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 330.977,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00513.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 340.088,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00515.jpg",
+          "label": "noncar",
+          "prediction": "car",
+          "latency_ms": 395.086,
+          "best_confidence": 0.4723,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00516.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 387.982,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00521.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 437.673,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00523.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 458.834,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00524.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 361.699,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00528.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 364.933,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00532.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 324.504,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00536.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 326.874,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00537.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 319.789,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00546.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 294.264,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00553.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 352.859,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00555.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 471.949,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00557.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 342.009,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00558.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 276.354,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00563.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 306.329,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00564.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 290.946,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00567.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 286.852,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00569.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 341.991,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00571.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 296.088,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00572.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 284.267,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00586.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 303.879,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00592.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 471.734,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00593.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 297.401,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00599.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 249.511,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00602.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 279.125,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00605.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 289.453,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00607.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 279.584,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00612.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 267.46,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00615.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 257.718,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00616.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 273.138,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00618.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 305.399,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00621.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 330.275,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00622.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 268.72,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00624.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 388.085,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00625.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 284.951,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00626.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 265.592,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00627.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 376.292,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00631.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 313.581,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00632.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 275.5,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00633.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 246.677,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00634.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 320.723,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00638.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 343.825,
+          "best_confidence": 0.0,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00639.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 272.433,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00644.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 270.616,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00647.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 267.563,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00654.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 743.597,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00661.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 319.887,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00662.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 288.575,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00663.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 486.974,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00664.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 305.414,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00665.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 324.698,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00667.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 356.793,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00668.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 302.431,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00674.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 326.518,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00675.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 301.216,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00676.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 307.485,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00677.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 278.386,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00679.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 296.077,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00684.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 300.019,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00686.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 302.349,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00688.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 290.721,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00692.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 292.304,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00693.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 302.248,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00695.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 313.67,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00697.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 414.45,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/day/noncars/day_noncars_00698.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 285.027,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        }
+      ]
+    },
+    "night": {
+      "samples": 200,
+      "confusion_matrix": {
+        "tp": 42,
+        "tn": 100,
+        "fp": 0,
+        "fn": 58
+      },
+      "metrics": {
+        "precision": 1.0,
+        "recall": 0.42,
+        "f1": 0.5915,
+        "accuracy": 0.71
+      },
+      "latency_ms": {
+        "mean": 300.128,
+        "p95": 391.149
+      },
+      "detection_confidence": {
+        "mean": 0.7932,
+        "count": 42
+      },
+      "details": [
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00701.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 319.271,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00702.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 288.623,
+          "best_confidence": 0.9082,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00703.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 334.143,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00708.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 321.121,
+          "best_confidence": 0.546,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00718.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 280.044,
+          "best_confidence": 0.7249,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00724.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 289.796,
+          "best_confidence": 0.7278,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00727.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 251.869,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00728.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 307.671,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00730.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 288.161,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00731.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 282.341,
+          "best_confidence": 0.7864,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00739.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 731.704,
+          "best_confidence": 0.7449,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00740.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 316.146,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00741.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 320.876,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00742.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 341.892,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00743.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 320.408,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00747.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 317.968,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00751.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 328.174,
+          "best_confidence": 0.9052,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00755.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 336.792,
+          "best_confidence": 0.8632,
+          "boxes_count": 8
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00757.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 338.357,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00761.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 318.513,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00769.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 318.167,
+          "best_confidence": 0.8443,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00772.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 273.066,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00773.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 279.873,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00774.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 260.79,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00777.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 284.921,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00779.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 303.622,
+          "best_confidence": 0.889,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00780.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 294.72,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00781.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 319.799,
+          "best_confidence": 0.7467,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00782.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 284.922,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00791.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 311.865,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00793.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 316.316,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00796.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 319.998,
+          "best_confidence": 0.8951,
+          "boxes_count": 7
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00798.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 338.107,
+          "best_confidence": 0.5576,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00799.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 274.897,
+          "best_confidence": 0.8689,
+          "boxes_count": 7
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00800.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 303.131,
+          "best_confidence": 0.6798,
+          "boxes_count": 6
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00806.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 299.925,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00809.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 291.477,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00810.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 403.698,
+          "best_confidence": 0.89,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00813.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 221.096,
+          "best_confidence": 0.8365,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00814.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 318.777,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00815.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 316.074,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00817.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 300.799,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00830.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 276.348,
+          "best_confidence": 0.7325,
+          "boxes_count": 6
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00835.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 261.199,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00836.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 267.062,
+          "best_confidence": 0.5366,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00839.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 268.931,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00841.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 290.003,
+          "best_confidence": 0.4388,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00845.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 359.424,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00847.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 309.597,
+          "best_confidence": 0.8161,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00850.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 312.442,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00855.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 323.698,
+          "best_confidence": 0.8059,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00856.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 261.201,
+          "best_confidence": 0.8992,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00857.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 278.036,
+          "best_confidence": 0.3758,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00858.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 264.932,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00859.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 278.439,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00861.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 262.198,
+          "best_confidence": 0.84,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00868.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 274.782,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00871.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 275.391,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00872.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 260.258,
+          "best_confidence": 0.8311,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00873.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 416.131,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00874.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 363.531,
+          "best_confidence": 0.8981,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00877.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 338.101,
+          "best_confidence": 0.9043,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00883.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 282.407,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00889.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 295.215,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00899.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 340.373,
+          "best_confidence": 0.0,
+          "boxes_count": 5
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00902.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 391.149,
+          "best_confidence": 0.8997,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00904.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 282.637,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00905.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 274.949,
+          "best_confidence": 0.8841,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00906.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 280.255,
+          "best_confidence": 0.8857,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00907.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 298.359,
+          "best_confidence": 0.7482,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00909.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 280.168,
+          "best_confidence": 0.6186,
+          "boxes_count": 8
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00911.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 294.524,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00912.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 287.154,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00913.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 338.592,
+          "best_confidence": 0.8854,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00916.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 283.238,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00920.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 280.691,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00921.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 294.182,
+          "best_confidence": 0.8962,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00929.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 291.334,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00932.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 294.01,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00933.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 326.499,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00936.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 290.722,
+          "best_confidence": 0.8846,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00937.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 323.987,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00939.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 335.892,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00950.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 318.696,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00951.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 328.669,
+          "best_confidence": 0.8897,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00952.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 283.66,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00954.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 276.274,
+          "best_confidence": 0.6887,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00957.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 279.553,
+          "best_confidence": 0.8375,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00963.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 280.58,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00964.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 262.712,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00965.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 266.64,
+          "best_confidence": 0.922,
+          "boxes_count": 7
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00970.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 311.721,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00972.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 274.268,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00974.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 238.424,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00975.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 263.924,
+          "best_confidence": 0.9084,
+          "boxes_count": 5
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00985.jpg",
+          "label": "car",
+          "prediction": "car",
+          "latency_ms": 248.389,
+          "best_confidence": 0.8738,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00989.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 291.587,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00993.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 292.644,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00994.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 258.027,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/cars/night_cars_00998.jpg",
+          "label": "car",
+          "prediction": "noncar",
+          "latency_ms": 279.489,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00700.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 325.432,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00712.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 276.071,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00713.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 283.98,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00715.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 282.725,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00719.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 298.271,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00721.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 315.469,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00722.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 305.916,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00727.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 267.232,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00730.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 263.034,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00731.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 283.837,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00739.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 361.549,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00741.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 264.551,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00742.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 267.083,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00746.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 263.788,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00753.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 278.578,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00754.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 308.176,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00756.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 273.425,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00757.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 280.811,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00765.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 283.503,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00766.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 277.865,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00769.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 269.128,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00771.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 272.426,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00776.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 261.439,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00777.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 275.443,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00785.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 281.381,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00786.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 268.169,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00792.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 261.499,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00798.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 301.709,
+          "best_confidence": 0.0,
+          "boxes_count": 3
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00800.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 310.889,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00803.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 327.815,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00806.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 259.628,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00810.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 330.493,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00811.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 328.419,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00813.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 359.297,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00816.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 285.794,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00817.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 340.005,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00819.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 292.523,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00823.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 392.533,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00828.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 430.52,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00831.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 319.86,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00835.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 278.962,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00836.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 311.438,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00837.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 299.787,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00842.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 303.628,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00843.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 253.865,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00849.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 268.725,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00850.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 287.206,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00857.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 288.327,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00858.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 291.974,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00859.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 302.574,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00860.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 279.654,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00861.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 283.467,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00862.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 249.237,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00866.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 327.584,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00869.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 275.361,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00871.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 281.998,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00873.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 341.162,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00875.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 282.431,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00878.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 276.603,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00882.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 356.894,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00887.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 339.902,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00891.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 263.273,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00895.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 292.508,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00896.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 274.661,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00899.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 337.758,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00901.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 316.73,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00903.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 300.481,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00907.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 274.661,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00908.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 492.432,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00914.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 242.175,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00919.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 255.315,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00921.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 243.233,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00932.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 283.525,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00934.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 263.309,
+          "best_confidence": 0.0,
+          "boxes_count": 0
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00935.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 435.097,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00939.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 294.753,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00941.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 264.853,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00944.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 260.651,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00945.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 274.373,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00947.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 264.795,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00950.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 259.64,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00951.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 268.347,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00955.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 277.525,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00957.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 418.53,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00958.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 244.116,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00960.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 241.298,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00965.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 217.658,
+          "best_confidence": 0.0,
+          "boxes_count": 4
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00966.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 261.217,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00967.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 265.768,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00968.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 249.356,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00972.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 421.642,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00984.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 371.529,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00986.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 400.945,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00987.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 304.101,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00988.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 248.079,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00991.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 353.829,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00993.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 264.628,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00994.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 294.459,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00996.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 305.787,
+          "best_confidence": 0.0,
+          "boxes_count": 1
+        },
+        {
+          "image": "./datasets/cars_noncars_daynight_tune/night/noncars/night_noncars_00997.jpg",
+          "label": "noncar",
+          "prediction": "noncar",
+          "latency_ms": 278.242,
+          "best_confidence": 0.0,
+          "boxes_count": 2
+        }
+      ]
+    }
+  },
+  "aggregate": {
+    "samples": 600,
+    "confusion_matrix": {
+      "tp": 126,
+      "tn": 299,
+      "fp": 1,
+      "fn": 174
+    },
+    "metrics": {
+      "precision": 0.9921,
+      "recall": 0.42,
+      "f1": 0.5902,
+      "accuracy": 0.7083
+    },
+    "latency_ms": {
+      "mean": 336.645,
+      "p95": 616.558
+    },
+    "detection_confidence": {
+      "mean": 0.7749,
+      "count": 127
+    }
+  },
+  "method_comparison_table": null
+}

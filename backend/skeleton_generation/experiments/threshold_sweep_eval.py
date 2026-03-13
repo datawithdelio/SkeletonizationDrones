@@ -33,6 +33,10 @@ def sweep(
     confidences: List[float],
     ious: List[float],
     target_classes: List[int],
+    positive_dir_name: str,
+    negative_dir_name: str,
+    positive_label: str,
+    negative_label: str,
 ):
     os.makedirs(output_dir, exist_ok=True)
     rows = []
@@ -46,6 +50,10 @@ def sweep(
             iou=iou,
             target_classes=target_classes,
             benchmark_image="",
+            positive_dir_name=positive_dir_name,
+            negative_dir_name=negative_dir_name,
+            positive_label=positive_label,
+            negative_label=negative_label,
         )
         with open(report_path, 'r', encoding='utf-8') as f:
             report = json.load(f)
@@ -102,6 +110,10 @@ def main():
     parser.add_argument('--confidences', default='0.10,0.15,0.20,0.25,0.30')
     parser.add_argument('--ious', default='0.50,0.60,0.70')
     parser.add_argument('--target-classes', default='0,2,4')
+    parser.add_argument('--positive-dir-name', default='drones')
+    parser.add_argument('--negative-dir-name', default='birds')
+    parser.add_argument('--positive-label', default='drone')
+    parser.add_argument('--negative-label', default='bird')
     args = parser.parse_args()
 
     result = sweep(
@@ -110,6 +122,10 @@ def main():
         confidences=_parse_float_list(args.confidences),
         ious=_parse_float_list(args.ious),
         target_classes=_parse_int_list(args.target_classes),
+        positive_dir_name=args.positive_dir_name,
+        negative_dir_name=args.negative_dir_name,
+        positive_label=args.positive_label,
+        negative_label=args.negative_label,
     )
     print(result)
 

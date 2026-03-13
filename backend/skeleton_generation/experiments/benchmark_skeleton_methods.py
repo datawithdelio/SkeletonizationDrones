@@ -6,7 +6,6 @@ from dataclasses import dataclass
 
 import cv2 as cv
 import numpy as np
-from ultralytics import YOLO
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(
@@ -36,6 +35,11 @@ def _load_image(path):
 
 
 def _extract_foreground_mask_with_yolo(image, confidence=0.35, iou=0.65):
+    try:
+        from ultralytics import YOLO
+    except Exception:
+        return np.zeros(image.shape[:2], dtype=np.uint8), 0
+
     model = YOLO(MODEL_PATH)
     results = model.predict(image, conf=confidence, iou=iou, save=False, show=False, verbose=False)
 
@@ -130,15 +134,20 @@ def run_skimage_medial(mask):
     return med.astype(np.uint8) * 255
 
 
-def benchmark(image_path, output_dir, confidence, iou):
+def benchmark(image_path, output_dir, confidence, iou, skip_yolo=False):
     _safe_mkdir(output_dir)
     image = _load_image(image_path)
     height, width = image.shape[:2]
 
-    yolo_mask, yolo_instances = _extract_foreground_mask_with_yolo(image, confidence=confidence, iou=iou)
+    if skip_yolo:
+        yolo_mask = np.zeros(image.shape[:2], dtype=np.uint8)
+        yolo_instances = 0
+    else:
+        yolo_mask, yolo_instances = _extract_foreground_mask_with_yolo(image, confidence=confidence, iou=iou)
+
     if cv.countNonZero(yolo_mask) == 0:
         mask = _fallback_mask(image)
-        mask_source = "fallback_otsu"
+        mask_source = "fallback_otsu" if skip_yolo else "fallback_otsu"
     else:
         mask = yolo_mask
         mask_source = "yolo_union_mask"
@@ -203,6 +212,7 @@ def main():
     parser.add_argument("--output-dir", default="benchmark_outputs", help="Directory for outputs.")
     parser.add_argument("--confidence", type=float, default=0.35, help="YOLO confidence threshold.")
     parser.add_argument("--iou", type=float, default=0.65, help="YOLO IoU threshold.")
+    parser.add_argument("--skip-yolo", action="store_true", help="Skip YOLO mask extraction and use fallback masking.")
     args = parser.parse_args()
 
     report_path = benchmark(
@@ -210,6 +220,7 @@ def main():
         output_dir=args.output_dir,
         confidence=args.confidence,
         iou=args.iou,
+        skip_yolo=args.skip_yolo,
     )
     print(f"Benchmark complete. Report: {report_path}")
 

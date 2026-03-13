@@ -1,0 +1,40 @@
+{
+  "image_path": "../airplane_test.png",
+  "mask_source": "yolo_union_mask",
+  "yolo_instances_detected": 1,
+  "mask_pixels": 173375,
+  "methods": [
+    {
+      "name": "kimia_edf",
+      "runtime_ms": 1102.0804160070838,
+      "skeleton_pixels": 29095,
+      "connected_components": 60,
+      "output_path": "./evaluation_outputs_cars/method_benchmark/kimia_edf.png",
+      "error": ""
+    },
+    {
+      "name": "opencv_thinning",
+      "runtime_ms": 520.5275409971364,
+      "skeleton_pixels": 2118,
+      "connected_components": 1,
+      "output_path": "./evaluation_outputs_cars/method_benchmark/opencv_thinning.png",
+      "error": ""
+    },
+    {
+      "name": "skimage_skeletonize",
+      "runtime_ms": 168.22970799694303,
+      "skeleton_pixels": 2152,
+      "connected_components": 1,
+      "output_path": "./evaluation_outputs_cars/method_benchmark/skimage_skeletonize.png",
+      "error": ""
+    },
+    {
+      "name": "skimage_medial_axis",
+      "runtime_ms": 145.99908400850836,
+      "skeleton_pixels": 3335,
+      "connected_components": 1,
+      "output_path": "./evaluation_outputs_cars/method_benchmark/skimage_medial_axis.png",
+      "error": ""
+    }
+  ]
+}
