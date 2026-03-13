@@ -1,0 +1,40 @@
+{
+  "image_path": "hh8v8sig_drone-generic-getty_625x300_02_February_23.webp",
+  "mask_source": "yolo_union_mask",
+  "yolo_instances_detected": 1,
+  "mask_pixels": 16762,
+  "methods": [
+    {
+      "name": "kimia_edf",
+      "runtime_ms": 0.11624999933701474,
+      "skeleton_pixels": 0,
+      "connected_components": 0,
+      "output_path": "backend/evaluation_outputs_cars/method_benchmark_drone/kimia_edf.png",
+      "error": "No module named 'skeleton_generation'"
+    },
+    {
+      "name": "opencv_thinning",
+      "runtime_ms": 36.723999999594525,
+      "skeleton_pixels": 539,
+      "connected_components": 1,
+      "output_path": "backend/evaluation_outputs_cars/method_benchmark_drone/opencv_thinning.png",
+      "error": ""
+    },
+    {
+      "name": "skimage_skeletonize",
+      "runtime_ms": 434.2347499987227,
+      "skeleton_pixels": 525,
+      "connected_components": 1,
+      "output_path": "backend/evaluation_outputs_cars/method_benchmark_drone/skimage_skeletonize.png",
+      "error": ""
+    },
+    {
+      "name": "skimage_medial_axis",
+      "runtime_ms": 26.757458999782102,
+      "skeleton_pixels": 590,
+      "connected_components": 1,
+      "output_path": "backend/evaluation_outputs_cars/method_benchmark_drone/skimage_medial_axis.png",
+      "error": ""
+    }
+  ]
+}
