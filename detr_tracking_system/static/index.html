@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YOLO Drone Tracking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body data-stream="idle">
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+    <div class="ambient-grid"></div>
+
+    <main class="shell">
+      <section class="console reveal">
+        <header class="topbar">
+          <div class="brand-group">
+            <button class="nav-chip" type="button" aria-label="Back to mission controls">&#8592;</button>
+            <div class="brand-copy">
+              <strong>Drone Recon Console</strong>
+              <span>YOLOv8n + DeepSORT Live Feed</span>
+            </div>
+          </div>
+
+          <div class="top-pills">
+            <div class="top-pill">
+              <span class="pulse-dot pulse-red"></span>
+              Live Vision
+            </div>
+            <div class="top-pill">
+              <span class="pulse-dot pulse-teal"></span>
+              Persistent ID Lock
+            </div>
+            <div class="top-pill">
+              <span class="pulse-dot pulse-green"></span>
+              Trail Rendering
+            </div>
+          </div>
+
+          <div class="connection-pill">
+            <span class="pulse-dot pulse-green"></span>
+            Connected
+          </div>
+        </header>
+
+        <div class="console-grid">
+          <aside class="sidebar">
+            <section class="glass device-card reveal">
+              <div class="section-header">
+                <p class="section-label">Device Information</p>
+                <button class="mini-icon" type="button" aria-label="Telemetry controls">&#8599;</button>
+              </div>
+
+              <div class="drone-stage">
+                <div class="drone-rings"></div>
+                <svg class="drone-illustration" viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <ellipse cx="160" cy="168" rx="98" ry="18" fill="rgba(53, 218, 186, 0.14)" />
+                  <path d="M101 104L64 72M218 104L255 72M104 112L69 146M215 112L251 146" stroke="#6E7F84" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M64 72H40M255 72H280M69 146H40M251 146H280" stroke="#5D6D72" stroke-width="8" stroke-linecap="round"/>
+                  <rect x="104" y="70" width="112" height="68" rx="20" fill="url(#droneBody)" stroke="#AFC4C7" stroke-width="4"/>
+                  <rect x="126" y="88" width="72" height="20" rx="10" fill="#7A8B90" opacity="0.65"/>
+                  <path d="M136 141L121 178M186 141L201 178" stroke="#96A8AD" stroke-width="7" stroke-linecap="round"/>
+                  <circle cx="121" cy="178" r="8" fill="#C5D5D8"/>
+                  <circle cx="201" cy="178" r="8" fill="#C5D5D8"/>
+                  <path d="M94 68L74 44M226 68L246 44M92 138L70 164M228 138L250 164" stroke="#A0B0B4" stroke-width="5" stroke-linecap="round"/>
+                  <ellipse cx="63" cy="35" rx="34" ry="9" stroke="#6EE9D2" stroke-width="3"/>
+                  <ellipse cx="256" cy="35" rx="34" ry="9" stroke="#6EE9D2" stroke-width="3"/>
+                  <ellipse cx="59" cy="173" rx="34" ry="9" stroke="#6EE9D2" stroke-width="3"/>
+                  <ellipse cx="260" cy="173" rx="34" ry="9" stroke="#6EE9D2" stroke-width="3"/>
+                  <circle cx="160" cy="104" r="16" fill="#2BE0B3" opacity="0.24"/>
+                  <defs>
+                    <linearGradient id="droneBody" x1="104" y1="70" x2="216" y2="138" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#E8F0F2"/>
+                      <stop offset="1" stop-color="#98AAB0"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+
+              <div class="telemetry-grid">
+                <article class="telemetry-tile">
+                  <span class="telemetry-icon">◉</span>
+                  <strong>48%</strong>
+                  <span>Battery</span>
+                </article>
+                <article class="telemetry-tile">
+                  <span class="telemetry-icon">⌁</span>
+                  <strong>300m</strong>
+                  <span>Range</span>
+                </article>
+                <article class="telemetry-tile">
+                  <span class="telemetry-icon">▣</span>
+                  <strong>70.2GB</strong>
+                  <span>Storage</span>
+                </article>
+                <article class="telemetry-tile">
+                  <span class="telemetry-icon">◎</span>
+                  <strong>23 min</strong>
+                  <span>Duration</span>
+                </article>
+              </div>
+
+              <div class="signal-bars" aria-hidden="true">
+                <span style="--h: 34%"></span>
+                <span style="--h: 48%"></span>
+                <span style="--h: 63%"></span>
+                <span style="--h: 26%"></span>
+                <span style="--h: 43%"></span>
+                <span class="accent" style="--h: 82%"></span>
+                <span style="--h: 55%"></span>
+                <span style="--h: 30%"></span>
+              </div>
+            </section>
+
+            <form id="upload-form" class="glass controls reveal">
+              <div class="section-header controls-head">
+                <div>
+                  <p class="section-label">Mission Control</p>
+                  <h2>Upload and Launch Tracking</h2>
+                </div>
+                <div class="mini-badge">Drone Mode</div>
+              </div>
+
+              <label>
+                Video File
+                <input id="video-file" name="file" type="file" accept="video/*" required />
+              </label>
+
+              <label>
+                YOLO Target Labels
+                <input id="target-labels" name="target_labels" type="text" value="drone" />
+                <small><code>drone</code> expands to <code>airplane,bird,kite</code>. You can also enter raw COCO labels.</small>
+              </label>
+
+              <div class="control-grid">
+                <label>
+                  Confidence
+                  <input id="confidence-threshold" name="confidence_threshold" type="number" min="0.05" max="0.99" step="0.05" value="0.35" />
+                </label>
+
+                <label>
+                  Trail Length
+                  <input id="trail-length" name="trail_length" type="number" min="5" max="120" step="1" value="30" />
+                </label>
+              </div>
+
+              <div class="control-grid">
+                <label>
+                  Resize Width
+                  <input id="resize-width" name="resize_width" type="number" min="320" max="1920" step="32" value="640" />
+                </label>
+
+                <label>
+                  Tile Stride
+                  <input id="tile-stride" name="tile_stride" type="number" min="1" max="8" step="1" value="6" />
+                </label>
+              </div>
+
+              <div class="control-grid">
+                <label>
+                  Drone Mode
+                  <select id="drone-mode" name="drone_mode">
+                    <option value="false" selected>Off</option>
+                    <option value="true">On</option>
+                  </select>
+                </label>
+
+                <label>
+                  DeepSORT Max Age
+                  <input id="max-age" name="max_age" type="number" min="5" max="120" step="1" value="30" />
+                </label>
+              </div>
+
+              <button id="submit-button" type="submit">
+                <span>Start Live Tracking</span>
+                <span class="button-glow"></span>
+              </button>
+              <p id="form-message" class="message" role="status"></p>
+            </form>
+          </aside>
+
+          <section class="main-column">
+            <section class="hero-panel reveal">
+              <p class="eyebrow">Cinematic Drone Recon Interface</p>
+              <h1>Persistent Drone Tracking With a Dark Flight-Deck Aesthetic</h1>
+              <p class="intro">
+                Upload a drone video, stream annotated frames in real time, and watch YOLO detections become stable
+                DeepSORT identities with live trails and cockpit-style overlays.
+              </p>
+
+              <div class="note">
+                <strong>Model note:</strong>
+                <span>
+                  <code>yolov8n.pt</code> is COCO-trained and has no native drone class. This interface leans into a
+                  drone-oriented proxy mode using <code>airplane</code>, <code>bird</code>, and <code>kite</code>,
+                  plus a tiled small-object pass.
+                </span>
+              </div>
+
+              <div class="meta-strip">
+                <article class="meta-card">
+                  <span>Session</span>
+                  <strong id="meta-session">Standby</strong>
+                </article>
+                <article class="meta-card">
+                  <span>Target Classes</span>
+                  <strong id="meta-labels">drone</strong>
+                </article>
+                <article class="meta-card">
+                  <span>Recon Mode</span>
+                  <strong id="meta-mode">Tiled Sweep</strong>
+                </article>
+              </div>
+            </section>
+
+            <section class="glass viewer reveal">
+              <div class="viewer-header">
+                <div>
+                  <p class="section-label">Live Annotated Feed</p>
+                  <h2>Urban Aerial Monitor</h2>
+                </div>
+                <div id="stream-state" class="badge idle">Idle</div>
+              </div>
+
+              <div class="stream-frame">
+                <div class="frame-noise"></div>
+                <div class="frame-grid"></div>
+                <div class="frame-corners" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="target-reticle" aria-hidden="true"></div>
+                <div class="hud-caption">Identity lock, motion trails, and tracked bounding boxes update in real time.</div>
+
+                <video id="preview-video" class="preview-video" muted playsinline loop></video>
+                <img id="stream-image" alt="Annotated video stream" />
+                <div id="stream-placeholder" class="placeholder">
+                  <div class="placeholder-copy">
+                    <p class="placeholder-kicker">Awaiting Input</p>
+                    <h3>Load a drone clip to activate the live recon canvas</h3>
+                    <p>
+                      The feed window will transition into the annotated stream as soon as your upload is accepted and
+                      the tracker warms up.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="metrics-grid">
+                <dl class="stats">
+                  <div>
+                    <dt>Device</dt>
+                    <dd id="stat-device">-</dd>
+                  </div>
+                  <div>
+                    <dt>Processed Frames</dt>
+                    <dd id="stat-frames">0</dd>
+                  </div>
+                  <div>
+                    <dt>Active Tracks</dt>
+                    <dd id="stat-tracks">0</dd>
+                  </div>
+                  <div>
+                    <dt>Processing FPS</dt>
+                    <dd id="stat-fps">0.00</dd>
+                  </div>
+                </dl>
+
+                <article class="glass chart-card">
+                  <div class="chart-head">
+                    <p class="section-label">Recon Frequency</p>
+                    <span>Adaptive Sweep</span>
+                  </div>
+                  <div class="line-chart" aria-hidden="true">
+                    <span style="--x: 0%; --y: 68%"></span>
+                    <span style="--x: 10%; --y: 49%"></span>
+                    <span style="--x: 22%; --y: 57%"></span>
+                    <span style="--x: 34%; --y: 38%"></span>
+                    <span style="--x: 46%; --y: 61%"></span>
+                    <span style="--x: 58%; --y: 43%"></span>
+                    <span style="--x: 70%; --y: 29%"></span>
+                    <span style="--x: 82%; --y: 42%"></span>
+                    <span style="--x: 100%; --y: 36%"></span>
+                  </div>
+                </article>
+
+                <article class="glass chart-card waveform-card">
+                  <div class="chart-head">
+                    <p class="section-label">Signal Efficiency Shift</p>
+                    <span>+32%</span>
+                  </div>
+                  <div class="wave-chart" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
