@@ -24,6 +24,8 @@ TRACK_COLOR = (72, 220, 160)
 PREDICTED_COLOR = (0, 170, 255)
 TRAIL_COLOR = (46, 164, 255)
 TEXT_COLOR = (255, 255, 255)
+SKELETON_COLOR = (110, 255, 226)
+BOX_FILL_COLOR = (26, 70, 66)
 
 
 @dataclass(slots=True)
@@ -35,17 +37,17 @@ class Detection:
 
 @dataclass(slots=True)
 class TrackingConfig:
-    confidence_threshold: float = 0.35
+    confidence_threshold: float = 0.25
     target_labels: tuple[str, ...] = DEFAULT_TARGET_LABELS
-    trail_length: int = 30
+    trail_length: int = 42
     resize_width: int = 640
     drone_mode: bool = False
     tile_stride: int = 6
     tile_threshold: float = 0.55
-    max_age: int = 30
+    max_age: int = 45
     n_init: int = 2
     nn_budget: int = 100
-    max_predicted_frames: int = 8
+    max_predicted_frames: int = 18
     jpeg_quality: int = 80
 
 
@@ -82,17 +84,17 @@ def parse_tracking_config(form_data: dict[str, str]) -> TrackingConfig:
         return min(maximum, max(minimum, parsed))
 
     return TrackingConfig(
-        confidence_threshold=parse_float("confidence_threshold", 0.35, 0.01, 0.99),
+        confidence_threshold=parse_float("confidence_threshold", 0.25, 0.01, 0.99),
         target_labels=parse_target_labels(form_data.get("target_labels")),
-        trail_length=parse_int("trail_length", 30, 2),
+        trail_length=parse_int("trail_length", 42, 2),
         resize_width=parse_int("resize_width", 640, 0),
         drone_mode=parse_bool(form_data.get("drone_mode"), False),
         tile_stride=parse_int("tile_stride", 6, 1),
         tile_threshold=parse_float("tile_threshold", 0.55, 0.05, 0.99),
-        max_age=parse_int("max_age", 30, 1),
+        max_age=parse_int("max_age", 45, 1),
         n_init=parse_int("n_init", 2, 1),
         nn_budget=parse_int("nn_budget", 100, 1),
-        max_predicted_frames=parse_int("max_predicted_frames", 8, 0),
+        max_predicted_frames=parse_int("max_predicted_frames", 18, 0),
         jpeg_quality=parse_int("jpeg_quality", 80, 30),
     )
 
@@ -485,8 +487,11 @@ class VideoTrackingSession:
 
             box_color = PREDICTED_COLOR if is_predicted else TRACK_COLOR
             line_style = cv2.LINE_AA
-            thickness = 1 if is_predicted else 2
+            thickness = 2 if is_predicted else 3
+            self._draw_track_fill(overlay, left, top, right, bottom, box_color, is_predicted)
+            self._draw_skeleton_overlay(overlay, frame, left, top, right, bottom, is_predicted)
             cv2.rectangle(overlay, (left, top), (right, bottom), box_color, thickness, line_style)
+            cv2.circle(overlay, center, 5 if is_predicted else 6, box_color, -1, cv2.LINE_AA)
 
             label_suffix = " (pred)" if is_predicted else ""
             label = f"Drone #{track_id}{label_suffix}"
@@ -503,12 +508,100 @@ class VideoTrackingSession:
         for index in range(1, len(points)):
             fade = index / len(points)
             color = tuple(int(channel * fade) for channel in TRAIL_COLOR)
-            thickness = max(1, int(1 + 3 * fade))
+            thickness = max(2, int(2 + 4 * fade))
             cv2.line(frame, points[index - 1], points[index], color, thickness, cv2.LINE_AA)
+            cv2.circle(frame, points[index], max(1, int(2 + 2 * fade)), color, -1, cv2.LINE_AA)
+
+    def _draw_track_fill(
+        self,
+        frame: np.ndarray,
+        left: int,
+        top: int,
+        right: int,
+        bottom: int,
+        color: tuple[int, int, int],
+        is_predicted: bool,
+    ) -> None:
+        alpha = 0.08 if is_predicted else 0.12
+        region = frame[top:bottom, left:right]
+        if region.size == 0:
+            return
+        fill = np.full_like(region, BOX_FILL_COLOR if not is_predicted else (18, 52, 74))
+        cv2.addWeighted(fill, alpha, region, 1 - alpha, 0, region)
+
+    def _draw_skeleton_overlay(
+        self,
+        frame: np.ndarray,
+        source_frame: np.ndarray,
+        left: int,
+        top: int,
+        right: int,
+        bottom: int,
+        is_predicted: bool,
+    ) -> None:
+        if is_predicted:
+            return
+
+        roi = source_frame[top:bottom, left:right]
+        if roi.size == 0 or roi.shape[0] < 24 or roi.shape[1] < 24:
+            return
+
+        skeleton = self._extract_skeleton(roi)
+        if skeleton is None:
+            return
+
+        colored = np.zeros_like(roi)
+        colored[skeleton > 0] = SKELETON_COLOR
+        glow = cv2.dilate(skeleton, np.ones((3, 3), dtype=np.uint8), iterations=1)
+        colored[glow > 0] = np.maximum(colored[glow > 0], np.array([70, 180, 170], dtype=np.uint8))
+        frame_roi = frame[top:bottom, left:right]
+        cv2.addWeighted(colored, 0.72, frame_roi, 1.0, 0, frame_roi)
+
+    def _extract_skeleton(self, roi: np.ndarray) -> np.ndarray | None:
+        gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+        blur = cv2.GaussianBlur(gray, (5, 5), 0)
+        _, binary = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        inverted = cv2.bitwise_not(binary)
+
+        candidate_masks = [binary, inverted]
+        best_mask: np.ndarray | None = None
+        best_score = float("-inf")
+
+        for candidate in candidate_masks:
+            cleaned = cv2.morphologyEx(candidate, cv2.MORPH_OPEN, np.ones((3, 3), dtype=np.uint8), iterations=1)
+            cleaned = cv2.morphologyEx(cleaned, cv2.MORPH_CLOSE, np.ones((3, 3), dtype=np.uint8), iterations=1)
+            area_ratio = cv2.countNonZero(cleaned) / float(cleaned.shape[0] * cleaned.shape[1])
+            if area_ratio < 0.01 or area_ratio > 0.45:
+                continue
+
+            edges = cv2.Canny(cleaned, 60, 160)
+            score = cv2.countNonZero(edges) - abs(area_ratio - 0.12) * 3000
+            if score > best_score:
+                best_score = score
+                best_mask = cleaned
+
+        if best_mask is None:
+            return None
+
+        skeleton = np.zeros_like(best_mask)
+        element = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+        working = best_mask.copy()
+        for _ in range(40):
+            eroded = cv2.erode(working, element)
+            temp = cv2.dilate(eroded, element)
+            temp = cv2.subtract(working, temp)
+            skeleton = cv2.bitwise_or(skeleton, temp)
+            working = eroded
+            if cv2.countNonZero(working) == 0:
+                break
+
+        if cv2.countNonZero(skeleton) < 10:
+            return None
+        return skeleton
 
     def _draw_label(self, frame: np.ndarray, text: str, left: int, top: int, color: tuple[int, int, int]) -> None:
         font = cv2.FONT_HERSHEY_SIMPLEX
-        text_scale = 0.6
+        text_scale = 0.7
         thickness = 2
         (text_width, text_height), baseline = cv2.getTextSize(text, font, text_scale, thickness)
         text_top = max(0, top - text_height - baseline - 8)
@@ -531,6 +624,7 @@ class VideoTrackingSession:
             f"Target labels: {', '.join(self.config.target_labels)}",
             f"Confidence >= {self.config.confidence_threshold:.2f}",
             f"Drone mode: {'on' if self.config.drone_mode else 'off'}",
+            "Overlay: box + trail + skeleton",
             f"Tracks: {self.active_tracks} active / {len(self.seen_track_ids)} total",
             f"FPS: {self.fps:.2f} proc / {self.source_fps:.2f} src",
         ]
@@ -538,7 +632,7 @@ class VideoTrackingSession:
         origin_x, origin_y = 16, 24
         line_height = 24
         panel_height = line_height * len(panel_text) + 18
-        panel_width = 420
+        panel_width = 430
         cv2.rectangle(frame, (origin_x - 10, origin_y - 18), (origin_x + panel_width, origin_y + panel_height), (10, 18, 28), -1)
         for index, text in enumerate(panel_text):
             cv2.putText(
