@@ -40,15 +40,15 @@ async def upload_video(
     confidence_threshold: str = Form("0.25"),
     target_labels: str = Form("drone"),
     trail_length: str = Form("42"),
-    resize_width: str = Form("640"),
+    resize_width: str = Form("512"),
     drone_mode: str = Form("false"),
     tile_stride: str = Form("6"),
     tile_threshold: str = Form("0.55"),
     max_age: str = Form("45"),
-    n_init: str = Form("2"),
+    n_init: str = Form("1"),
     nn_budget: str = Form("100"),
     max_predicted_frames: str = Form("18"),
-    jpeg_quality: str = Form("80"),
+    jpeg_quality: str = Form("70"),
 ) -> JSONResponse:
     if not file.filename:
         raise HTTPException(status_code=400, detail="A video filename is required.")

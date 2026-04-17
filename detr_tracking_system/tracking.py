@@ -24,8 +24,10 @@ TRACK_COLOR = (72, 220, 160)
 PREDICTED_COLOR = (0, 170, 255)
 TRAIL_COLOR = (46, 164, 255)
 TEXT_COLOR = (255, 255, 255)
-SKELETON_COLOR = (110, 255, 226)
 BOX_FILL_COLOR = (26, 70, 66)
+FORECAST_COLOR = (120, 220, 255)
+SKELETON_COLOR = (130, 255, 245)
+SKELETON_GLOW = (255, 255, 255)
 
 
 @dataclass(slots=True)
@@ -40,15 +42,19 @@ class TrackingConfig:
     confidence_threshold: float = 0.25
     target_labels: tuple[str, ...] = DEFAULT_TARGET_LABELS
     trail_length: int = 42
-    resize_width: int = 640
+    resize_width: int = 512
     drone_mode: bool = False
     tile_stride: int = 6
     tile_threshold: float = 0.55
     max_age: int = 45
-    n_init: int = 2
+    n_init: int = 1
     nn_budget: int = 100
     max_predicted_frames: int = 18
-    jpeg_quality: int = 80
+    jpeg_quality: int = 70
+    detect_interval: int = 2
+    forecast_steps: int = 5
+    motion_min_area: int = 700
+    skeleton_refresh_interval: int = 3
 
 
 def parse_target_labels(raw_value: str | None) -> tuple[str, ...]:
@@ -87,15 +93,19 @@ def parse_tracking_config(form_data: dict[str, str]) -> TrackingConfig:
         confidence_threshold=parse_float("confidence_threshold", 0.25, 0.01, 0.99),
         target_labels=parse_target_labels(form_data.get("target_labels")),
         trail_length=parse_int("trail_length", 42, 2),
-        resize_width=parse_int("resize_width", 640, 0),
+        resize_width=parse_int("resize_width", 512, 0),
         drone_mode=parse_bool(form_data.get("drone_mode"), False),
         tile_stride=parse_int("tile_stride", 6, 1),
         tile_threshold=parse_float("tile_threshold", 0.55, 0.05, 0.99),
         max_age=parse_int("max_age", 45, 1),
-        n_init=parse_int("n_init", 2, 1),
+        n_init=parse_int("n_init", 1, 1),
         nn_budget=parse_int("nn_budget", 100, 1),
         max_predicted_frames=parse_int("max_predicted_frames", 18, 0),
-        jpeg_quality=parse_int("jpeg_quality", 80, 30),
+        jpeg_quality=parse_int("jpeg_quality", 70, 30),
+        detect_interval=parse_int("detect_interval", 2, 1),
+        forecast_steps=parse_int("forecast_steps", 5, 1),
+        motion_min_area=parse_int("motion_min_area", 700, 100),
+        skeleton_refresh_interval=parse_int("skeleton_refresh_interval", 3, 1),
     )
 
 
@@ -239,9 +249,9 @@ class YoloDroneDetector:
     def _prediction_size(self, frame: np.ndarray) -> int:
         height, width = frame.shape[:2]
         longest_side = max(height, width)
-        if longest_side <= 512:
-            return 512
-        return 640
+        if longest_side <= 416:
+            return 416
+        return 512
 
     def _non_max_suppress(self, detections: list[Detection], iou_threshold: float) -> list[Detection]:
         ordered = sorted(detections, key=lambda det: det.confidence, reverse=True)
@@ -307,10 +317,15 @@ class VideoTrackingSession:
         self.processed_frames = 0
         self.total_frames = 0
         self.active_tracks = 0
+        self.predicted_tracks = 0
         self.seen_track_ids: set[int] = set()
+        self.display_track_ids: dict[int, int] = {}
+        self.next_display_track_id = 1
         self.trails: dict[int, deque[tuple[int, int]]] = defaultdict(
             lambda: deque(maxlen=self.config.trail_length)
         )
+        self.skeleton_cache: dict[int, tuple[int, np.ndarray]] = {}
+        self.previous_gray_frame: np.ndarray | None = None
 
     def start(self) -> None:
         with self.condition:
@@ -337,6 +352,7 @@ class VideoTrackingSession:
             "processed_frames": self.processed_frames,
             "total_frames": self.total_frames,
             "active_tracks": self.active_tracks,
+            "predicted_tracks": self.predicted_tracks,
             "unique_tracks_seen": len(self.seen_track_ids),
             "target_labels": list(self.config.target_labels),
             "confidence_threshold": self.config.confidence_threshold,
@@ -399,7 +415,15 @@ class VideoTrackingSession:
                     break
 
                 frame = self._resize_frame(frame)
-                detections = self.detector.detect(frame, self.config, self.processed_frames + 1)
+                frame_index = self.processed_frames + 1
+                should_detect = (
+                    frame_index == 1
+                    or self.config.detect_interval <= 1
+                    or frame_index % self.config.detect_interval == 0
+                )
+                detections = self.detector.detect(frame, self.config, frame_index) if should_detect else []
+                if not detections:
+                    detections = self._motion_fallback_detect(frame)
                 track_inputs = [
                     (det.bbox_xywh, det.confidence, det.label)
                     for det in detections
@@ -459,20 +483,19 @@ class VideoTrackingSession:
         return cv2.resize(frame, (self.config.resize_width, resized_height), interpolation=cv2.INTER_AREA)
 
     def _render_tracks(self, frame: np.ndarray, tracks) -> np.ndarray:
-        overlay = frame.copy()
         visible_track_ids: set[int] = set()
+        forecasted_track_ids: set[int] = set()
+        display_tracks = self._select_display_tracks(frame, tracks)
 
-        for track in tracks:
-            if not track.is_confirmed():
-                continue
-
+        for track in display_tracks:
             track_id = int(track.track_id)
             is_predicted = track.time_since_update > 0
-            if is_predicted and track.time_since_update > self.config.max_predicted_frames:
-                continue
 
             visible_track_ids.add(track_id)
             self.seen_track_ids.add(track_id)
+            display_track_id = self.display_track_ids.setdefault(track_id, self.next_display_track_id)
+            if display_track_id == self.next_display_track_id:
+                self.next_display_track_id += 1
             left, top, right, bottom = [int(value) for value in track.to_ltrb()]
             left = max(0, left)
             top = max(0, top)
@@ -483,23 +506,55 @@ class VideoTrackingSession:
 
             center = ((left + right) // 2, (top + bottom) // 2)
             self.trails[track_id].append(center)
-            self._draw_trail(overlay, self.trails[track_id])
+            self._draw_trail(frame, self.trails[track_id])
+            self._draw_skeleton_overlay(frame, left, top, right, bottom, track_id, is_predicted)
+            forecast_points = self._forecast_points(self.trails[track_id], frame.shape)
+            if forecast_points:
+                forecasted_track_ids.add(track_id)
+                self._draw_forecast(frame, forecast_points, left, top, right, bottom)
 
             box_color = PREDICTED_COLOR if is_predicted else TRACK_COLOR
             line_style = cv2.LINE_AA
             thickness = 2 if is_predicted else 3
-            self._draw_track_fill(overlay, left, top, right, bottom, box_color, is_predicted)
-            self._draw_skeleton_overlay(overlay, frame, left, top, right, bottom, is_predicted)
-            cv2.rectangle(overlay, (left, top), (right, bottom), box_color, thickness, line_style)
-            cv2.circle(overlay, center, 5 if is_predicted else 6, box_color, -1, cv2.LINE_AA)
+            self._draw_track_fill(frame, left, top, right, bottom, box_color, is_predicted)
+            cv2.rectangle(frame, (left, top), (right, bottom), box_color, thickness, line_style)
+            cv2.circle(frame, center, 5 if is_predicted else 6, box_color, -1, cv2.LINE_AA)
 
             label_suffix = " (pred)" if is_predicted else ""
-            label = f"Drone #{track_id}{label_suffix}"
-            self._draw_label(overlay, label, left, top, box_color)
+            label = f"Drone #{display_track_id}{label_suffix}"
+            self._draw_label(frame, label, left, top, box_color)
 
         self.active_tracks = len(visible_track_ids)
-        self._draw_status_panel(overlay)
-        return overlay
+        self.predicted_tracks = len(forecasted_track_ids)
+        self._draw_status_panel(frame)
+        return frame
+
+    def _select_display_tracks(self, frame: np.ndarray, tracks) -> list:
+        candidates = []
+        for track in tracks:
+            if not track.is_confirmed():
+                continue
+            if track.time_since_update > self.config.max_predicted_frames:
+                continue
+
+            left, top, right, bottom = [int(value) for value in track.to_ltrb()]
+            left = max(0, left)
+            top = max(0, top)
+            right = min(frame.shape[1] - 1, right)
+            bottom = min(frame.shape[0] - 1, bottom)
+            if right <= left or bottom <= top:
+                continue
+
+            area = max(1, (right - left) * (bottom - top))
+            freshness_bonus = 1.0 if track.time_since_update == 0 else 0.6
+            score = area * freshness_bonus
+            candidates.append((score, track))
+
+        if not candidates:
+            return []
+
+        candidates.sort(key=lambda item: item[0], reverse=True)
+        return [candidates[0][1]]
 
     def _draw_trail(self, frame: np.ndarray, points: deque[tuple[int, int]]) -> None:
         if len(points) < 2:
@@ -529,64 +584,143 @@ class VideoTrackingSession:
         fill = np.full_like(region, BOX_FILL_COLOR if not is_predicted else (18, 52, 74))
         cv2.addWeighted(fill, alpha, region, 1 - alpha, 0, region)
 
+    def _motion_fallback_detect(self, frame: np.ndarray) -> list[Detection]:
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray = cv2.GaussianBlur(gray, (9, 9), 0)
+
+        if self.previous_gray_frame is None:
+            self.previous_gray_frame = gray
+            return []
+
+        diff = cv2.absdiff(self.previous_gray_frame, gray)
+        self.previous_gray_frame = gray
+
+        _, threshold = cv2.threshold(diff, 18, 255, cv2.THRESH_BINARY)
+        threshold = cv2.dilate(threshold, None, iterations=2)
+        threshold = cv2.erode(threshold, None, iterations=1)
+        contours, _ = cv2.findContours(threshold, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        detections: list[tuple[float, Detection]] = []
+        frame_height, frame_width = frame.shape[:2]
+        for contour in contours:
+            area = cv2.contourArea(contour)
+            if area < self.config.motion_min_area:
+                continue
+
+            x, y, width, height = cv2.boundingRect(contour)
+            if width < 16 or height < 16:
+                continue
+            if width > frame_width * 0.8 or height > frame_height * 0.8:
+                continue
+
+            detections.append(
+                (
+                    area,
+                    Detection(
+                    bbox_xywh=[float(x), float(y), float(width), float(height)],
+                    confidence=0.35,
+                    label="motion-drone",
+                    ),
+                )
+            )
+
+        if not detections:
+            return []
+
+        detections.sort(key=lambda item: item[0], reverse=True)
+        strongest = [item[1] for item in detections[:1]]
+        return self.detector._non_max_suppress(strongest, iou_threshold=0.35)
+
     def _draw_skeleton_overlay(
         self,
         frame: np.ndarray,
-        source_frame: np.ndarray,
         left: int,
         top: int,
         right: int,
         bottom: int,
+        track_id: int,
         is_predicted: bool,
     ) -> None:
         if is_predicted:
             return
 
-        roi = source_frame[top:bottom, left:right]
-        if roi.size == 0 or roi.shape[0] < 24 or roi.shape[1] < 24:
+        roi = frame[top:bottom, left:right]
+        if roi.size == 0 or min(roi.shape[:2]) < 20:
             return
 
-        skeleton = self._extract_skeleton(roi)
-        if skeleton is None:
-            return
+        cached = self.skeleton_cache.get(track_id)
+        use_cached = (
+            cached is not None
+            and self.processed_frames - cached[0] < self.config.skeleton_refresh_interval
+        )
 
-        colored = np.zeros_like(roi)
-        colored[skeleton > 0] = SKELETON_COLOR
-        glow = cv2.dilate(skeleton, np.ones((3, 3), dtype=np.uint8), iterations=1)
-        colored[glow > 0] = np.maximum(colored[glow > 0], np.array([70, 180, 170], dtype=np.uint8))
-        frame_roi = frame[top:bottom, left:right]
-        cv2.addWeighted(colored, 0.72, frame_roi, 1.0, 0, frame_roi)
+        if use_cached:
+            skeleton_mask = cached[1]
+        else:
+            skeleton_mask = self._extract_skeleton_mask(roi)
+            if skeleton_mask is None:
+                return
+            self.skeleton_cache[track_id] = (self.processed_frames, skeleton_mask)
 
-    def _extract_skeleton(self, roi: np.ndarray) -> np.ndarray | None:
-        gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+        if skeleton_mask.shape[:2] != roi.shape[:2]:
+            skeleton_mask = cv2.resize(
+                skeleton_mask,
+                (roi.shape[1], roi.shape[0]),
+                interpolation=cv2.INTER_NEAREST,
+            )
+
+        overlay = np.zeros_like(roi)
+        overlay[skeleton_mask > 0] = SKELETON_COLOR
+        glow = cv2.dilate(skeleton_mask, np.ones((3, 3), dtype=np.uint8), iterations=1)
+        overlay[glow > 0] = np.maximum(overlay[glow > 0], np.array(SKELETON_GLOW, dtype=np.uint8))
+        cv2.addWeighted(overlay, 0.6, roi, 1.0, 0, roi)
+
+    def _extract_skeleton_mask(self, roi: np.ndarray) -> np.ndarray | None:
+        height, width = roi.shape[:2]
+        max_dim = max(height, width)
+        scale = min(1.0, 96.0 / max_dim)
+        sample = roi
+        if scale < 1.0:
+            sample = cv2.resize(
+                roi,
+                (max(1, int(width * scale)), max(1, int(height * scale))),
+                interpolation=cv2.INTER_AREA,
+            )
+
+        gray = cv2.cvtColor(sample, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray, (5, 5), 0)
         _, binary = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         inverted = cv2.bitwise_not(binary)
 
-        candidate_masks = [binary, inverted]
-        best_mask: np.ndarray | None = None
+        candidates = [binary, inverted]
+        chosen: np.ndarray | None = None
         best_score = float("-inf")
 
-        for candidate in candidate_masks:
-            cleaned = cv2.morphologyEx(candidate, cv2.MORPH_OPEN, np.ones((3, 3), dtype=np.uint8), iterations=1)
-            cleaned = cv2.morphologyEx(cleaned, cv2.MORPH_CLOSE, np.ones((3, 3), dtype=np.uint8), iterations=1)
-            area_ratio = cv2.countNonZero(cleaned) / float(cleaned.shape[0] * cleaned.shape[1])
-            if area_ratio < 0.01 or area_ratio > 0.45:
+        for candidate in candidates:
+            cleaned = cv2.morphologyEx(
+                candidate,
+                cv2.MORPH_OPEN,
+                np.ones((3, 3), dtype=np.uint8),
+                iterations=1,
+            )
+            filled_ratio = cv2.countNonZero(cleaned) / float(cleaned.shape[0] * cleaned.shape[1])
+            if filled_ratio < 0.02 or filled_ratio > 0.55:
                 continue
 
-            edges = cv2.Canny(cleaned, 60, 160)
-            score = cv2.countNonZero(edges) - abs(area_ratio - 0.12) * 3000
+            edges = cv2.Canny(cleaned, 40, 140)
+            score = cv2.countNonZero(edges) - abs(filled_ratio - 0.16) * 1000
             if score > best_score:
                 best_score = score
-                best_mask = cleaned
+                chosen = cleaned
 
-        if best_mask is None:
+        if chosen is None:
             return None
 
-        skeleton = np.zeros_like(best_mask)
+        skeleton = np.zeros_like(chosen)
         element = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
-        working = best_mask.copy()
-        for _ in range(40):
+        working = chosen.copy()
+
+        for _ in range(18):
             eroded = cv2.erode(working, element)
             temp = cv2.dilate(eroded, element)
             temp = cv2.subtract(working, temp)
@@ -595,9 +729,121 @@ class VideoTrackingSession:
             if cv2.countNonZero(working) == 0:
                 break
 
-        if cv2.countNonZero(skeleton) < 10:
+        if cv2.countNonZero(skeleton) < 6:
             return None
+
+        if skeleton.shape[:2] != roi.shape[:2]:
+            skeleton = cv2.resize(
+                skeleton,
+                (roi.shape[1], roi.shape[0]),
+                interpolation=cv2.INTER_NEAREST,
+            )
+
         return skeleton
+
+    def _forecast_points(
+        self,
+        points: deque[tuple[int, int]],
+        frame_shape: tuple[int, ...],
+    ) -> list[tuple[int, int]]:
+        if len(points) < 2:
+            return []
+
+        recent_points = list(points)[-3:]
+        deltas = [
+            (
+                recent_points[index][0] - recent_points[index - 1][0],
+                recent_points[index][1] - recent_points[index - 1][1],
+            )
+            for index in range(1, len(recent_points))
+        ]
+        if not deltas:
+            return []
+
+        velocity_x = sum(delta[0] for delta in deltas) / len(deltas)
+        velocity_y = sum(delta[1] for delta in deltas) / len(deltas)
+        if abs(velocity_x) + abs(velocity_y) < 1.0:
+            return []
+
+        height, width = frame_shape[:2]
+        origin_x, origin_y = recent_points[-1]
+        forecast_points: list[tuple[int, int]] = []
+
+        for step in range(1, self.config.forecast_steps + 1):
+            next_x = int(round(origin_x + velocity_x * step))
+            next_y = int(round(origin_y + velocity_y * step))
+            next_x = min(width - 1, max(0, next_x))
+            next_y = min(height - 1, max(0, next_y))
+            forecast_points.append((next_x, next_y))
+
+        return forecast_points
+
+    def _draw_forecast(
+        self,
+        frame: np.ndarray,
+        forecast_points: list[tuple[int, int]],
+        left: int,
+        top: int,
+        right: int,
+        bottom: int,
+    ) -> None:
+        if not forecast_points:
+            return
+
+        current_center = ((left + right) // 2, (top + bottom) // 2)
+        anchor = current_center
+
+        cv2.arrowedLine(
+            frame,
+            current_center,
+            forecast_points[0],
+            FORECAST_COLOR,
+            4,
+            cv2.LINE_AA,
+            tipLength=0.3,
+        )
+
+        for index, point in enumerate(forecast_points, start=1):
+            fade = 0.45 + (0.55 * (index / max(1, len(forecast_points))))
+            color = tuple(min(255, int(channel * fade)) for channel in FORECAST_COLOR)
+            cv2.line(frame, anchor, point, color, 4, cv2.LINE_AA)
+            cv2.circle(frame, point, 5, color, -1, cv2.LINE_AA)
+            anchor = point
+
+        final_center = forecast_points[-1]
+        half_width = max(10, (right - left) // 2)
+        half_height = max(10, (bottom - top) // 2)
+        ghost_left = max(0, final_center[0] - half_width)
+        ghost_top = max(0, final_center[1] - half_height)
+        ghost_right = min(frame.shape[1] - 1, final_center[0] + half_width)
+        ghost_bottom = min(frame.shape[0] - 1, final_center[1] + half_height)
+
+        cv2.rectangle(
+            frame,
+            (ghost_left, ghost_top),
+            (ghost_right, ghost_bottom),
+            FORECAST_COLOR,
+            3,
+            cv2.LINE_AA,
+        )
+        cv2.rectangle(
+            frame,
+            (ghost_left, ghost_top),
+            (ghost_right, ghost_bottom),
+            (255, 255, 255),
+            1,
+            cv2.LINE_AA,
+        )
+        cv2.putText(
+            frame,
+            "Projected",
+            (ghost_left, max(14, ghost_top - 6)),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            FORECAST_COLOR,
+            2,
+            cv2.LINE_AA,
+        )
 
     def _draw_label(self, frame: np.ndarray, text: str, left: int, top: int, color: tuple[int, int, int]) -> None:
         font = cv2.FONT_HERSHEY_SIMPLEX
@@ -624,8 +870,11 @@ class VideoTrackingSession:
             f"Target labels: {', '.join(self.config.target_labels)}",
             f"Confidence >= {self.config.confidence_threshold:.2f}",
             f"Drone mode: {'on' if self.config.drone_mode else 'off'}",
-            "Overlay: box + trail + skeleton",
+            f"Detect every {self.config.detect_interval} frame(s)",
+            "Overlay: box + trail + skeleton + projected path",
+            "Fallback: motion assist when YOLO misses",
             f"Tracks: {self.active_tracks} active / {len(self.seen_track_ids)} total",
+            f"Forecasts: {self.predicted_tracks}",
             f"FPS: {self.fps:.2f} proc / {self.source_fps:.2f} src",
         ]
 
